@@ -10,36 +10,47 @@ import {
   Heading,
   Input,
   Link,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
-const Login = () => {
+const Signup = () => {
   return (
-    <Center minH="calc(100vh - 56px)" bg="twitter.500">
+    <Center minH="calc(100vh - 56px)" bg="twitter.500" px={{ base: 2, md: 0 }}>
       <Box
-        w={{ base: "90%", md: "500px" }}
+        w={{ base: "90%", md: "600px" }}
         my={{ base: "20px", md: 0 }}
-        p={{ base: "30px", md: 10 }}
+        p={{ base: "30px", md: 12 }}
         shadow="lg"
         borderRadius="lg"
         bg="white"
       >
         <Heading textAlign="center" mb={4}>
-          Log In
+          Register
         </Heading>
         <form>
-          <FormControl>
+          <Stack mt={4} direction={{ base: "column", md: "row" }}>
+            <FormControl>
+              <FormLabel>First Name</FormLabel>
+              <Input type="text" variant="filled" name="firstName" />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Last Name</FormLabel>
+              <Input type="text" variant="filled" name="lastName" />
+            </FormControl>
+          </Stack>
+          <FormControl mt={3}>
             <FormLabel>Email</FormLabel>
-            <Input type="email" />
+            <Input type="email" variant="filled" name="email" />
           </FormControl>
-          <FormControl>
+          <FormControl mt={3}>
             <FormLabel>Password</FormLabel>
-            <Input type="password" />
+            <Input type="password" variant="filled" name="password" />
           </FormControl>
-          <Button colorScheme="twitter" mt={6} w="full">
-            Log In
+          <Button type="submit" colorScheme="twitter" mt={6} w="full">
+            Register
           </Button>
         </form>
         <HStack mt={2} align="center">
@@ -48,11 +59,11 @@ const Login = () => {
           </Text>
           <Link
             as={RouterLink}
-            to="/signup"
+            to="/login"
             color="gray.500"
             fontWeight="semibold"
           >
-            <Text>Register</Text>
+            <Text>Log In</Text>
           </Link>
         </HStack>
         <Box position="relative" my={10}>
@@ -72,4 +83,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

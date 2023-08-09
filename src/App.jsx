@@ -9,8 +9,9 @@ import {
 import RootLayout from "./Layout/RootLayout";
 
 // Pages
-import Login from "./Pages/Login";
 import Home from "./Pages/Home";
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -18,6 +19,7 @@ const App = () => {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
       </Route>
     )
   );
