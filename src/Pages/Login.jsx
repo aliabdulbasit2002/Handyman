@@ -17,7 +17,7 @@ import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   return (
-    <Center minH="calc(100vh - 56px)" bg="twitter.500">
+    <Center minH="calc(100vh - 56px)">
       <Box
         w={{ base: "90%", md: "500px" }}
         my={{ base: "20px", md: 0 }}
