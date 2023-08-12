@@ -6,7 +6,7 @@ const Navbar = () => {
     <Flex
       h="56px"
       px={4}
-      bg="green.500"
+      // bg="green.500"
       align="center"
       justify="space-between"
       shadow="md"
