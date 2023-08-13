@@ -10,12 +10,15 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AiTwotoneStar } from "react-icons/ai";
-import { MdOutlineCleaningServices, MdVerified } from "react-icons/md";
+import { MdOutlineCleaningServices, MdVerified } from "react-icons/Md";
 import { ImLocation } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import cleanerImg from "../assets/Images/cleaner.png";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Profile = () => {
+  const {profileId}  = useParams()
+  const navigate = useNavigate()
   return (
     <Box>
       {/* Profile details */}
@@ -36,7 +39,7 @@ const Profile = () => {
         <Flex
           as={Box}
           flexDir="column"
-          justify={{ md: "center" }}
+          justify={{ md: "space-evenly" }}
           //   gap={5}
           w={{ md: "50%" }}
           mt={4}
@@ -92,7 +95,7 @@ const Profile = () => {
               </Flex>
             </Box>
           </Box>
-          <Button colorScheme="green" mt={{ base: 3, md: 4 }} w="200px">
+          <Button onClick={()=>navigate('/Booking')} colorScheme="green" mt={{ base: 3, md: 4 }} w="200px">
             Book Now
           </Button>
         </Flex>

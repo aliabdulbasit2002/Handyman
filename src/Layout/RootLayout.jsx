@@ -6,7 +6,7 @@ const RootLayout = () => {
   return (
     <>
       
-      <Container  maxW="xxl"   shadow="md" px={0}>
+      <Container maxW="xxl"  shadow="md" px={0}>
 
         <Container maxW="container.xl">
           <Navbar />

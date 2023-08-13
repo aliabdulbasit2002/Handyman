@@ -1,9 +1,13 @@
 import React, { useRef, useState } from "react";
-import { Box, Container, Text, SimpleGrid, Image } from "@chakra-ui/react";
+import { Box, Container, Text, SimpleGrid, Image,Link as ChakraLink } from "@chakra-ui/react";
+import { Link as ReactLink } from 'react-router-dom'
+
 import Hero from "../Components/Hero";
 import Categories from "../Components/Categories";
 import ServiceCard from "../Components/ServiceCard";
+
 import { Swiper, SwiperSlide } from "swiper/react";
+
 import banner1 from "../assets/Images/banner1.jpg";
 import banner2 from "../assets/Images/banner2.jpg";
 import banner3 from "../assets/Images/banner3.jpg";

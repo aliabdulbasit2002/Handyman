@@ -20,12 +20,12 @@ function Categories() {
         </Text>
         <Spacer />
         <Text fontWeight={"semibold"} fontSize={{ base: 13, md: 20 }}>
-          <Link to={'#'}>View All</Link>
+          <Link to={'/Categories'}>View All</Link>
           
         </Text>
       </Flex>
 
-      <SimpleGrid columns={{base:6,md:6}} alignItems={"center"} gap={{ base: 5, md: 10 }} fontWeight={{base:'light',md:'semibold'}} color={'gray.500'}>
+      <SimpleGrid columns={{base:6,md:6}} alignItems={"center"} gap={{ base: 4, md: 10 }} fontWeight={{base:'light',md:'semibold'}} color={'gray.500'}>
         <CategItem img={plumber} title={'Plumber'}/>
         <CategItem img={cleaner} title={'Cleaner'}/>
         <CategItem img={electrician} title={'Electrician'}/>

@@ -5,10 +5,10 @@ function CategItem({ title, img }) {
   return (
     <Box alignItems={'center'} display={'flex'} justifyContent={'center'} flexDirection={'column'}>
       <Box
-        w={{ base: 10, md: 20 }}
-        h={{ base: 10, md: 20 }}
+        w={{ base: 12, md: 20 }}
+        h={{ base: 12, md: 20 }}
         bg={"white"}
-        borderRadius={"full"}
+        borderRadius={"5px"}
         overflow={"hidden"}
         display={"flex"}
         justifyContent={"center"}

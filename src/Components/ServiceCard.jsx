@@ -1,10 +1,11 @@
 import React from 'react'
-import {Text,Box,Image,Flex,Spacer} from '@chakra-ui/react'
+import {Text,Box,Image,Flex,Spacer,Link as ChakraLink} from '@chakra-ui/react'
 import {MdLocationOn,MdStar} from 'react-icons/Md'
+import { Link as ReactLink } from 'react-router-dom'
 
 function ServiceCard({title,location,img}) {
   return (
-    <Box shadow={'md'}  position={'relative'} overflow={'hidden'} rounded={10} >
+    <ChakraLink as={ReactLink} to={'/profile/1'} shadow={'md'} textDecor={'none'}  position={'relative'} overflow={'hidden'} rounded={10} style={{ textDecoration: "none" }}>
       <Box w="100%" >
         <Image src={img} w="100%" h={{base:"250px",md:"300px"}}   objectFit={{base:'cover'}}/>
       </Box>
@@ -14,7 +15,7 @@ function ServiceCard({title,location,img}) {
           <Text fontWeight={'semibold'} fontSize={{base:14,md:19}} color='blue.400'>{title}</Text>
           <Spacer/>
           
-          <small>View Profile</small>
+          <small textDecor="none">View Profile</small>
           
         </Flex>
 
@@ -32,7 +33,7 @@ function ServiceCard({title,location,img}) {
 
       </Box>
       
-    </Box>
+    </ChakraLink>
   )
 }
 
