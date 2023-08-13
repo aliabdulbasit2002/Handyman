@@ -9,8 +9,8 @@ const Navbar = () => {
       // bg="green.500"
       align="center"
       justify="space-between"
-      shadow="md"
-      maxW="1440px"
+      // shadow="md"
+      // maxW="container.lg"
     >
       <Link as={RouterLink} to="/">
         <Heading size={{ base: "md", md: "lg" }}>HandyHelp</Heading>
