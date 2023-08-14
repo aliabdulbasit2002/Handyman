@@ -33,7 +33,7 @@ const Profile = () => {
         justify={{ md: "space-evenly" }}
         p={5}
         fontSize={{ base: "18px", md: "unset" }}
-        ps={{ base: 10, md: 0 }}
+        ps={{ base: 4, md: 0 }}
       >
         <Box w={{ base: "100%", md: "50%" }}>
           <Image
@@ -115,7 +115,7 @@ const Profile = () => {
       <Tabs
         variant="enclosed-colored"
         colorScheme="green"
-        px={10}
+        px={4}
         mt={{ md: 10 }}
       >
         <TabList>
