@@ -6,6 +6,11 @@ import {
   Heading,
   Icon,
   Image,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -15,10 +20,11 @@ import { ImLocation } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import cleanerImg from "../assets/Images/cleaner.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Reviews from "../Components/Reviews";
 
 const Profile = () => {
-  const {profileId}  = useParams()
-  const navigate = useNavigate()
+  const { profileId } = useParams();
+  const navigate = useNavigate();
   return (
     <Box>
       {/* Profile details */}
@@ -95,12 +101,36 @@ const Profile = () => {
               </Flex>
             </Box>
           </Box>
-          <Button onClick={()=>navigate('/Booking')} colorScheme="green" mt={{ base: 3, md: 4 }} w="200px">
+          <Button
+            onClick={() => navigate("/Booking")}
+            colorScheme="green"
+            mt={{ base: 3, md: 4 }}
+            w="200px"
+          >
             Book Now
           </Button>
         </Flex>
       </Flex>
       {/* Reviews */}
+      <Tabs
+        variant="enclosed-colored"
+        colorScheme="green"
+        px={10}
+        mt={{ md: 10 }}
+      >
+        <TabList>
+          <Tab _selected={{ color: "white", bg: "green.400" }}>
+            Customer Reviews
+          </Tab>
+          <Tab _selected={{ color: "white", bg: "green.400" }}>Profile</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <Reviews />
+          </TabPanel>
+          <TabPanel>{/* PRofile Here */}</TabPanel>
+        </TabPanels>
+      </Tabs>
     </Box>
   );
 };
