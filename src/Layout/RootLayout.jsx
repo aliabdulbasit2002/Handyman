@@ -4,14 +4,19 @@ import Navbar from "../Components/Navbar";
 
 const RootLayout = () => {
   return (
-    <Container maxW="1300px" px={0}>
-      <Container maxW="container" px={0}>
-        <Navbar />
+    <>
+      
+      <Container maxW="xxl"  shadow="md" px={0}>
+
+        <Container maxW="container.xl">
+          <Navbar />
+        </Container>
       </Container>
-      <Container maxW="container" px={0}>
-        <Outlet />
-      </Container>
-    </Container>
+  
+        <Container maxW="container.xl" px={0}>
+          <Outlet />
+        </Container>
+    </>
   );
 };
 

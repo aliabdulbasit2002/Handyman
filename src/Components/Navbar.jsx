@@ -5,12 +5,9 @@ const Navbar = () => {
   return (
     <Flex
       h="56px"
-      px={4}
-      bg="green.500"
       align="center"
       justify="space-between"
-      shadow="md"
-      maxW="1440px"
+
     >
       <Link as={RouterLink} to="/">
         <Heading size={{ base: "md", md: "lg" }}>HandyHelp</Heading>
