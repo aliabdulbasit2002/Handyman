@@ -15,15 +15,17 @@ import Signup from "./Pages/Signup";
 import Profile from "./Pages/Profile";
 import AllCatrgories from "./Pages/AllCatrgories";
 import Booking from "./Pages/Booking";
+import Userprofile from "./Pages/Userprofile";
 
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
+        <Route path="userprofile" element={<Userprofile />} />
         <Route path="profile/:profileId" element={<Profile />} />
-        <Route path="Categories" element={<AllCatrgories/>} />
-        <Route path="Booking" element={<Booking/>} />
+        <Route path="Categories" element={<AllCatrgories />} />
+        <Route path="Booking" element={<Booking />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
       </Route>
