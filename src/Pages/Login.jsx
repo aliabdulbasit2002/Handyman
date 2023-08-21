@@ -12,10 +12,40 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginUser, setLoginUser] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      const data = await axios.post(
+        "http://localhost:3001/client/login",
+        loginUser
+      );
+      localStorage.setItem("user", JSON.stringify(data));
+      setIsLoading(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <Center minH="calc(100vh - 56px)">
       <Box
@@ -29,16 +59,32 @@ const Login = () => {
         <Heading textAlign="center" mb={4}>
           Log In
         </Heading>
-        <form>
+        <form onSubmit={handleLogin}>
           <FormControl>
             <FormLabel>Email</FormLabel>
-            <Input type="email" />
+            <Input
+              type="email"
+              variant="filled"
+              name="email"
+              onChange={handleChange}
+            />
           </FormControl>
           <FormControl>
             <FormLabel>Password</FormLabel>
-            <Input type="password" />
+            <Input
+              type="password"
+              variant="filled"
+              name="password"
+              onChange={handleChange}
+            />
           </FormControl>
-          <Button colorScheme="twitter" mt={6} w="full">
+          <Button
+            type="submit"
+            colorScheme="twitter"
+            mt={6}
+            w="full"
+            isLoading={isLoading}
+          >
             Log In
           </Button>
         </form>

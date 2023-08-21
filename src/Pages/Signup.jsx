@@ -14,7 +14,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 
@@ -30,8 +30,9 @@ const Signup = () => {
     },
     password: "",
   });
-  const { fullname, phone, occupation, email, password, address } =
-    registerUser;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,11 +42,15 @@ const Signup = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
+      setIsLoading(true);
+      const data = await axios.post(
         "http://localhost:3001/client/newClient",
         registerUser
       );
-      console.log(res.data);
+      localStorage.setItem("user", JSON.stringify(data));
+      setIsLoading(false);
+      navigate("/");
+      // console.log(registerUser);
     } catch (error) {
       console.log(error.message);
     }
@@ -94,6 +99,26 @@ const Signup = () => {
               />
             </FormControl>
           </Stack>
+          <Stack mt={3} direction={{ base: "column", md: "row" }}>
+            <FormControl>
+              <FormLabel>City</FormLabel>
+              <Input
+                type="test"
+                variant="filled"
+                name="registerUser.address.city"
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Town</FormLabel>
+              <Input
+                type="text"
+                variant="filled"
+                name="registerUser.address.town"
+                onChange={handleChange}
+              />
+            </FormControl>
+          </Stack>
           <FormControl mt={3}>
             <FormLabel>Email</FormLabel>
             <Input
@@ -112,7 +137,13 @@ const Signup = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <Button type="submit" colorScheme="twitter" mt={6} w="full">
+          <Button
+            type="submit"
+            colorScheme="twitter"
+            mt={6}
+            w="full"
+            isLoading={isLoading}
+          >
             Register
           </Button>
         </form>
