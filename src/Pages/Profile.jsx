@@ -93,7 +93,7 @@ const Profile = () => {
                 Dansoman Banana Inn
               </Flex>
               <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
-                <MdVerified color="green" />
+                <MdVerified color="blue" />
                 Verified
               </Flex>
               <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
@@ -103,7 +103,7 @@ const Profile = () => {
           </Box>
           <Button
             onClick={() => navigate("/Booking")}
-            colorScheme="green"
+            colorScheme="twitter"
             mt={{ base: 3, md: 4 }}
             w="200px"
           >
@@ -114,15 +114,15 @@ const Profile = () => {
       {/* Reviews */}
       <Tabs
         variant="enclosed-colored"
-        colorScheme="green"
+        colorScheme="twitter"
         px={4}
         mt={{ md: 10 }}
       >
         <TabList>
-          <Tab _selected={{ color: "white", bg: "green.400" }}>
+          <Tab _selected={{ color: "white", bg: "twitter.400" }}>
             Customer Reviews
           </Tab>
-          <Tab _selected={{ color: "white", bg: "green.400" }}>Profile</Tab>
+          <Tab _selected={{ color: "white", bg: "twitter.400" }}>Profile</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>

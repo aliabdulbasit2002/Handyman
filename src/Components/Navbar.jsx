@@ -1,5 +1,12 @@
-import { Button, Flex, HStack, Heading, Link } from "@chakra-ui/react";
-import { useEffect } from "react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Heading,
+  Link,
+} from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -17,13 +24,18 @@ const Navbar = () => {
         <Heading size={{ base: "md", md: "lg" }}>HandyHelp</Heading>
       </Link>
       {currentUser ? (
-        <Button
-          colorScheme="twitter"
-          size={{ base: "sm", md: "md" }}
-          onClick={handleLogout}
-        >
-          Log out
-        </Button>
+        <HStack>
+          <Link as={RouterLink} to="/userprofile">
+            <Avatar size="sm" />
+          </Link>
+          <Button
+            colorScheme="twitter"
+            size={{ base: "sm", md: "md" }}
+            onClick={handleLogout}
+          >
+            Log out
+          </Button>
+        </HStack>
       ) : (
         <HStack>
           <Button

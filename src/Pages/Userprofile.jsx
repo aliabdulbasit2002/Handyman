@@ -56,7 +56,7 @@ const Deposit = ({ balance }) => {
       <Text fontSize="3xl" fontWeight="extrabold" color="gray.400">
         GH {balance}
       </Text>
-      <Button onClick={onOpen} colorScheme="green" w="full" mt={3}>
+      <Button onClick={onOpen} colorScheme="twitter" w="full" mt={3}>
         Deposit
       </Button>
 
@@ -78,7 +78,7 @@ const Deposit = ({ balance }) => {
               <Input variant="filled" placeholder="amount" />
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="green" w="full" onClick={onClose}>
+              <Button colorScheme="twitter" w="full" onClick={onClose}>
                 Pay Now
               </Button>
             </ModalFooter>
