@@ -19,6 +19,8 @@ import axios from "axios";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isErrorCredentials, setIsErrorCredentials] = useState(false);
   const [loginUser, setLoginUser] = useState({
     email: "",
     password: "",
@@ -32,6 +34,14 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    // If there is no values in the input
+    if (!loginUser.email || !loginUser.password) {
+      setIsError(true);
+      setTimeout(() => {
+        setIsError(false);
+      }, 3000);
+      return;
+    }
     try {
       setIsLoading(true);
       const data = await axios.post(
@@ -39,6 +49,20 @@ const Login = () => {
         loginUser
       );
       localStorage.setItem("user", JSON.stringify(data));
+      // If user credential is not in the database
+      const activeUser = localStorage.getItem("user");
+      const currentUser = JSON.parse(activeUser);
+      if (
+        currentUser?.data[0]?.email !== loginUser.email ||
+        currentUser?.data[0]?.password !== loginUser.password
+      ) {
+        setIsErrorCredentials(true);
+        setTimeout(() => {
+          setIsErrorCredentials(false);
+        }, 3000);
+        setIsLoading(false);
+        return;
+      }
       setIsLoading(false);
       navigate("/");
     } catch (error) {
@@ -60,6 +84,16 @@ const Login = () => {
           Log In
         </Heading>
         <form onSubmit={handleLogin}>
+          {isError && (
+            <Text color="red.400" fontWeight="bold">
+              Enter email and password
+            </Text>
+          )}
+          {isErrorCredentials && (
+            <Text color="red.400" fontWeight="bold">
+              Wrong email or password
+            </Text>
+          )}
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input
@@ -84,6 +118,7 @@ const Login = () => {
             mt={6}
             w="full"
             isLoading={isLoading}
+            disabled={!loginUser.email || !loginUser.password}
           >
             Log In
           </Button>

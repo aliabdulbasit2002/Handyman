@@ -6,6 +6,7 @@ import {
   HStack,
   Heading,
   Link,
+  Text,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
@@ -25,6 +26,7 @@ const Navbar = () => {
       </Link>
       {currentUser ? (
         <HStack>
+          <Text>{currentUser?.data[0]?.email}</Text>
           <Link as={RouterLink} to="/userprofile">
             <Avatar size="sm" />
           </Link>
