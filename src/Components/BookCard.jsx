@@ -6,12 +6,12 @@ import {
   MdCategory,
   MdLocationOn,
   MdPerson2,
-} from "react-icons/Md";
+} from "react-icons/md";
 import { Link } from "react-router-dom";
 
 function BookCard({ img }) {
   return (
-    <Link to={'/profile/plumber'}>
+    <Link to={-1}>
       <Box
         bg="white"
         p={{ base: 3, md: 5 }}

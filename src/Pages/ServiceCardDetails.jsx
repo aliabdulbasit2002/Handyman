@@ -15,19 +15,34 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AiTwotoneStar } from "react-icons/ai";
-import { MdOutlineCleaningServices, MdVerified } from "react-icons/Md";
+import { MdOutlineCleaningServices, MdVerified } from "react-icons/md";
 import { ImLocation } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import cleanerImg from "../assets/Images/cleaner.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Reviews from "../Components/Reviews";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const Profile = () => {
-  const { profileId } = useParams();
+const ServiceCardDetails = () => {
+  const [serviceDetails, setServiceDetails] = useState([]);
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const serviceDetailsData = async () => {
+      const { data } = await axios.get("http://localhost:3001/business/" + id);
+      // console.log(data.data);
+      setServiceDetails(data.data.singleBusiness);
+    };
+    serviceDetailsData();
+  }, []);
+
+  const { businessName, isVerified, workers, category, freelancer, image } =
+    serviceDetails;
   return (
     <Box>
-      {/* Profile details */}
+      {/* ServiceCardDetails details */}
       <Flex
         flexDir={{ base: "column", md: "row" }}
         justify={{ md: "space-evenly" }}
@@ -37,7 +52,10 @@ const Profile = () => {
       >
         <Box w={{ base: "100%", md: "50%" }}>
           <Image
-            src={cleanerImg}
+            boxSize="md"
+            borderRadius="3xl"
+            src={`http://localhost:3001/images/${image}`}
+            fallbackSrc="https://via.placeholder.com/150"
             h={{ base: "400px", md: "550px" }}
             mx={{ md: "auto" }}
           />
@@ -52,7 +70,7 @@ const Profile = () => {
           pb={5}
         >
           <Heading fontSize={{ base: "3xl", md: "5xl" }}>
-            Ruth cleaning services
+            {businessName}
           </Heading>
           <Box>
             <Text
@@ -86,18 +104,31 @@ const Profile = () => {
             </HStack>
             <Box textAlign="start" mt={{ base: 0, md: 4 }}>
               <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
-                <MdOutlineCleaningServices /> Cleaning
+                <MdOutlineCleaningServices /> {category}
               </Flex>
-              <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
+              <Flex
+                as={Text}
+                align="center"
+                textTransform="capitalize"
+                fontSize={{ md: "24px" }}
+                gap={2}
+              >
                 <ImLocation />
-                Dansoman Banana Inn
+                {freelancer?.address?.city}
+              </Flex>
+              <Flex
+                as={Text}
+                align="center"
+                textTransform="capitalize"
+                fontSize={{ md: "24px" }}
+                gap={2}
+              >
+                {isVerified ? <MdVerified color="green" /> : <Icon />}
+                {isVerified ? "verified" : "Not Verified"}
               </Flex>
               <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
-                <MdVerified color="blue" />
-                Verified
-              </Flex>
-              <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
-                <BsPerson />5
+                <BsPerson />
+                {workers}
               </Flex>
             </Box>
           </Box>
@@ -135,4 +166,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ServiceCardDetails;
