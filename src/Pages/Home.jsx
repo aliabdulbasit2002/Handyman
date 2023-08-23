@@ -1,6 +1,14 @@
-import React, { useRef, useState } from "react";
-import { Box, Container, Text, SimpleGrid, Image,Link as ChakraLink } from "@chakra-ui/react";
-import { Link as ReactLink } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Container,
+  Text,
+  SimpleGrid,
+  Image,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
+import { MdVerified } from "react-icons/md";
 
 import Hero from "../Components/Hero";
 import Categories from "../Components/Categories";
@@ -22,8 +30,19 @@ import hairwoman from "../assets/Images/hairwoman.jpg";
 import "swiper/css";
 // import required modules
 import { Autoplay } from "swiper/modules";
+import axios from "axios";
 
 const Home = () => {
+  const [businesses, setBusinesses] = useState([]);
+  useEffect(() => {
+    const businessesData = async () => {
+      const { data } = await axios.get("http://localhost:3001/business");
+      setBusinesses(data);
+    };
+    businessesData();
+  }, []);
+
+  // console.log(businesses);
   return (
     <div>
       {/* HERO SECTION */}
@@ -64,47 +83,23 @@ const Home = () => {
           columns={{ base: 2, md: 3, lg: 4 }}
           gap={{ base: 2, md: 5 }}
         >
-          <ServiceCard
-            title={"Cleaner"}
-            location={"Spintex comm18"}
-            img={cleanerImg}
-          />
-          <ServiceCard
-            title={"Mechanic"}
-            location={"Spintex comm18"}
-            img={mechanicman}
-          />
-          <ServiceCard
-            title={"Plumber"}
-            location={"Spintex comm18"}
-            img={plumber2}
-          />
-          <ServiceCard
-            title={"Hairdresser"}
-            location={"Spintex comm18"}
-            img={hairwoman}
-          />
-          <ServiceCard
-            title={"Hairdresser"}
-            location={"Spintex comm18"}
-            img={hairwoman}
-          />
-          <ServiceCard
-            title={"Plumber"}
-            location={"Spintex comm18"}
-            img={plumber2}
-          />
-          <ServiceCard
-            title={"Cleaner"}
-            location={"Spintex comm18"}
-            img={cleanerImg}
-          />
-          <ServiceCard
-            title={"Mechanic"}
-            location={"Spintex comm18"}
-            img={mechanicman}
-          />
-          
+          {businesses.map((business) => {
+            const { _id, businessName, freelancer, isVerified, image } =
+              business;
+            return (
+              <ServiceCard
+                id={_id}
+                // key={id}
+                img={image}
+                businessName={businessName}
+                location={freelancer.address.city}
+                star="star"
+                isVerified={isVerified ? "verified" : "not verified"}
+                isVerifiedIcon={isVerified}
+                serviceProfile={"business/serviceProfile/" + _id}
+              />
+            );
+          })}
         </SimpleGrid>
       </Box>
     </div>

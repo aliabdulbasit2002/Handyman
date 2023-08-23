@@ -12,11 +12,11 @@ import RootLayout from "./Layout/RootLayout";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-import Profile from "./Pages/Profile";
 import AllCatrgories from "./Pages/AllCatrgories";
 import Booking from "./Pages/Booking";
 import Userprofile from "./Pages/Userprofile";
 import SingleCategory from "./Pages/SingleCategory";
+import ServiceCardDetails from "./Pages/ServiceCardDetails";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -24,9 +24,15 @@ const App = () => {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path="userprofile" element={<Userprofile />} />
-        <Route path="profile/:profileId" element={<Profile />} />
+        <Route
+          path="business/serviceProfile/:id"
+          element={<ServiceCardDetails />}
+        />
         <Route path="Categories" element={<AllCatrgories />} />
-        <Route path="singleCategory/:singlecategory" element={<SingleCategory/>}/>
+        <Route
+          path="singleCategory/:singlecategory"
+          element={<SingleCategory />}
+        />
         <Route path="Booking" element={<Booking />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
