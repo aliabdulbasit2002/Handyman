@@ -48,7 +48,7 @@ function BookCard({ img }) {
                 color="green.500"
               >
                 <MdVerifiedUser />
-                <small>Verified</small>
+                <small>Verified steve</small>
               </Box>
             </Box>
             {/* END OF STARS */}

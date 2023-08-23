@@ -17,6 +17,8 @@ import AllCatrgories from "./Pages/AllCatrgories";
 import Booking from "./Pages/Booking";
 import Userprofile from "./Pages/Userprofile";
 import SingleCategory from "./Pages/SingleCategory";
+import Active from "./Components/Active";
+import ActiveBooking from "./Pages/ActiveBooking";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -27,7 +29,9 @@ const App = () => {
         <Route path="profile/:profileId" element={<Profile />} />
         <Route path="Categories" element={<AllCatrgories />} />
         <Route path="singleCategory/:singlecategory" element={<SingleCategory/>}/>
+        <Route path="active" element={<Active/>} />
         <Route path="Booking" element={<Booking />} />
+        <Route path="ActiveBooking" element={<ActiveBooking/>} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
       </Route>
