@@ -18,15 +18,24 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import plumber2 from "../assets/Images/plumber2.jpg";
+import {useNavigate} from 'react-router-dom'
 
 import BookCard from "../Components/BookCard";
 
 function Booking() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [bookingInfo, setBookingInfo] = useState({});
+  const navigate = useNavigate()
 
   const handleSubmit = ()=>{
-    console.log(bookingInfo);
+    const checkValues = Object.values(bookingInfo).every(value => !value);
+    if(checkValues === true){
+      alert('Fill on the form')
+      return
+    }
+    console.log(bookingInfo)
+    navigate('/ActiveBooking')
+
     onOpen()
   }
 
