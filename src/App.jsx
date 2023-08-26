@@ -17,6 +17,7 @@ import Booking from "./Pages/Booking";
 import Userprofile from "./Pages/Userprofile";
 import SingleCategory from "./Pages/SingleCategory";
 import ServiceCardDetails from "./Pages/ServiceCardDetails";
+import ActiveBooking from "./Pages/ActiveBooking";
 
 const App = () => {
   const router = createBrowserRouter(

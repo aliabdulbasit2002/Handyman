@@ -6,7 +6,7 @@ import {
   MdCategory,
   MdLocationOn,
   MdPerson2,
-} from "react-icons/md";
+} from "react-icons/Md";
 import { Link } from "react-router-dom";
 
 function BookCard({ img }) {
@@ -22,12 +22,12 @@ function BookCard({ img }) {
       >
         <Flex gap={{ base: 2, md: 5 }}>
           <Box
-            bg="gray.500"
-            w={{ base: "80px" }}
+            bg="white"
+            w={{ base: "100px" }}
             borderRadius="5px"
             overflow="hidden"
           >
-            <Image src={img} alt="image here" w={"100%"} />
+            <Image src={img} alt="image here" w={"100%"} objectFit={'fill'} />
           </Box>
           <Box flexGrow={2}>
             <Text fontSize={{ base: "lg", md: "2xl" }} fontWeight={"bold"}>
@@ -35,13 +35,8 @@ function BookCard({ img }) {
             </Text>
             <small>Ruth Sandras</small>
             {/* STARS */}
-            <Box p={"2px"} display={"flex"} color={"orange.400"}>
-              <MdStar />
-              <MdStar />
-              <MdStar />
-              <MdStar />
-              <MdStar />
-              <Spacer />
+            <Box p={"2px"} display={"flex"} color={"orange.400"} my={1}>
+              <Box display={"inline-flex"} alignItems='center' bg={'orange'} px={2} color='white' borderRadius='4' mr='3'><MdStar /> 4.5</Box>
               <Box
                 display={"inline-flex"}
                 alignItems={"center"}
@@ -52,21 +47,24 @@ function BookCard({ img }) {
               </Box>
             </Box>
             {/* END OF STARS */}
+            <hr />
             <Box
               mt={"7px"}
               display={"flex"}
               gap={{ base: 2, md: 5 }}
               alignItems="center"
+              flexWrap='wrap'
+              
             >
-              <Box display={"inline-flex"}>
+              <Box display={"inline-flex"} alignItems='center'>
                 <MdCategory />
                 <small>Plumber</small>
               </Box>
-              <Box display={"inline-flex"}>
+              <Box display={"inline-flex"} alignItems='center'>
                 <MdLocationOn />
                 <small>Spintex comm18</small>
               </Box>
-              <Box display={"inline-flex"}>
+              <Box display={"inline-flex"} alignItems='center'>
                 <MdPerson2 />
                 <small>Plumber</small>
               </Box>
