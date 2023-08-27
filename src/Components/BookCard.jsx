@@ -12,7 +12,7 @@ import { Link, useLocation } from "react-router-dom";
 function BookCard() {
   const location = useLocation();
   const receivedData = location.state;
-  console.log(receivedData.serviceDetails);
+  // console.log(receivedData.serviceDetails);
 
   const {
     _id,
