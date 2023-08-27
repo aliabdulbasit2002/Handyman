@@ -45,6 +45,7 @@ function BookCard() {
           >
             <Image
               src={`http://localhost:3001/images/${image}`}
+              fallbackSrc="https://via.placeholder.com/150"
               alt="image here"
               w={"100%"}
               objectFit={"fill"}
