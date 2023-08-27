@@ -18,26 +18,31 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import plumber2 from "../assets/Images/plumber2.jpg";
-import {useNavigate} from 'react-router-dom'
+import { useLocation, useNavigate } from "react-router-dom";
 
 import BookCard from "../Components/BookCard";
 
 function Booking() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [bookingInfo, setBookingInfo] = useState({});
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleSubmit = ()=>{
-    const checkValues = Object.values(bookingInfo).every(value => !value);
-    if(checkValues === true){
-      alert('Fill on the form')
-      return
+  const handleSubmit = () => {
+    const activeUser = localStorage.getItem("user");
+    const currentUser = JSON.parse(activeUser);
+    if (!currentUser) {
+      return navigate("/login");
     }
-    console.log(bookingInfo)
-    navigate('/ActiveBooking')
+    const checkValues = Object.values(bookingInfo).every((value) => !value);
+    if (checkValues === true) {
+      alert("Fill on the fo rm");
+      return;
+    }
+    console.log(bookingInfo);
+    navigate("/ActiveBooking");
 
-    onOpen()
-  }
+    onOpen();
+  };
 
   const dateToday = () => {
     const currentDate = new Date();
@@ -51,30 +56,38 @@ function Booking() {
   };
 
   const getUserLiveLocation = () => {
-    navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
-      if (permissionStatus.state === 'granted') {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            setBookingInfo({...bookingInfo,cordinates : {lat:position.coords.latitude,long:position.coords.longitude}})
-          },
-          error => {
-            console.log('Error', error);
-          }
-        );
-      } else if (permissionStatus.state === 'prompt') {
-        console.log('Location permission is pending. Prompting user...');
-        alert("Your location is off, Kindly turn on device location")
-        // You can show a UI element or message to guide the user to grant permission.
-      } else {
-        console.log('Location permission denied or unavailable.');
-        alert("Permission denied, Kindly turn on device location")
-      }
-    });
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then((permissionStatus) => {
+        if (permissionStatus.state === "granted") {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setBookingInfo({
+                ...bookingInfo,
+                cordinates: {
+                  lat: position.coords.latitude,
+                  long: position.coords.longitude,
+                },
+              });
+            },
+            (error) => {
+              console.log("Error", error);
+            }
+          );
+        } else if (permissionStatus.state === "prompt") {
+          console.log("Location permission is pending. Prompting user...");
+          alert("Your location is off, Kindly turn on device location");
+          // You can show a UI element or message to guide the user to grant permission.
+        } else {
+          console.log("Location permission denied or unavailable.");
+          alert("Permission denied, Kindly turn on device location");
+        }
+      });
   };
 
   return (
     <Box p={{ base: 2, md: 5 }}>
-      <BookCard img={plumber2} />
+      <BookCard />
 
       {/* FORM */}
       <Box bg="white" p={5} my={5} shadow="lg" borderRadius="10px">

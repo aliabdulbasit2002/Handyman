@@ -1,30 +1,15 @@
-import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import lady from "../assets/Images/cleaner.png";
 
-const customers = [
-  {
-    name: "sam",
-    message: "Good services, i like her work",
-  },
-  {
-    name: "sam",
-    message: "Good services, i like her work",
-  },
-  {
-    name: "sam",
-    message: "Good services, i like her work",
-  },
-];
-
-const Reviews = () => {
+const Reviews = ({ customers }) => {
   return (
     <>
-      {customers.map((customer, index) => (
-        <Flex key={index} mt={6}>
-          <Image src={lady} boxSize="100px" objectFit="cover" />
+      {customers?.map((customer, index) => (
+        <Flex key={index} mt={6} align="center" gap={3}>
+          <Avatar />
           <Box>
-            <Heading as="h4">{customer.name}</Heading>
-            <Text>{customer.message}</Text>
+            <Heading as="h4">Heading</Heading>
+            <Text>{customer.comment}</Text>
           </Box>
         </Flex>
       ))}

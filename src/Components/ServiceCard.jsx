@@ -38,7 +38,7 @@ function ServiceCard({
           fallbackSrc="https://via.placeholder.com/150"
           w="100%"
           h={{ base: "250px", md: "300px" }}
-          objectFit={{ base: "cover" }}
+          objectFit={{ base: "contain", md: "cover" }}
         />
       </Box>
 
@@ -48,6 +48,7 @@ function ServiceCard({
             fontWeight={"semibold"}
             fontSize={{ base: 14, md: 19 }}
             color="blue.400"
+            textTransform={"capitalize"}
           >
             {businessName.length > 30
               ? businessName.slice(0, 20)
@@ -65,6 +66,7 @@ function ServiceCard({
               fontSize={{ base: 13, md: 15 }}
               display={"inline-flex"}
               alignItems={"center"}
+              textTransform={"capitalize"}
             >
               <MdLocationOn />
               <i>{location}</i>

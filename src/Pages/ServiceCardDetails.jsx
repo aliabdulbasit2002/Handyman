@@ -38,10 +38,20 @@ const ServiceCardDetails = () => {
     serviceDetailsData();
   }, []);
 
-  const { businessName, isVerified, workers, category, freelancer, image } =
-    serviceDetails;
+  const {
+    businessName,
+    isVerified,
+    workers,
+    category,
+    freelancer,
+    image,
+    comments,
+    bio,
+  } = serviceDetails;
+
+  console.log(comments);
   return (
-    <Box>
+    <Box mb={6}>
       {/* ServiceCardDetails details */}
       <Flex
         flexDir={{ base: "column", md: "row" }}
@@ -58,6 +68,7 @@ const ServiceCardDetails = () => {
             fallbackSrc="https://via.placeholder.com/150"
             h={{ base: "400px", md: "550px" }}
             mx={{ md: "auto" }}
+            objectFit="contain"
           />
         </Box>
         <Flex
@@ -77,8 +88,9 @@ const ServiceCardDetails = () => {
               color="gray.500"
               fontWeight="bold"
               fontSize={{ base: "x-large" }}
+              textTransform="capitalize"
             >
-              Ruth Andrea
+              {freelancer?.firstname} {freelancer?.lastname}
             </Text>
             <HStack>
               <Icon
@@ -132,8 +144,9 @@ const ServiceCardDetails = () => {
               </Flex>
             </Box>
           </Box>
+          {/* ${encodeURIComponent(data)} */}
           <Button
-            onClick={() => navigate("/Booking")}
+            onClick={() => navigate("/Booking", { state: { serviceDetails } })}
             colorScheme="twitter"
             mt={{ base: 3, md: 4 }}
             w="200px"
@@ -157,9 +170,11 @@ const ServiceCardDetails = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Reviews />
+            <Reviews customers={comments} />
           </TabPanel>
-          <TabPanel>{/* PRofile Here */}</TabPanel>
+          <TabPanel>
+            <Text>{bio}</Text>
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Box>

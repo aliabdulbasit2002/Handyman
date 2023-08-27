@@ -20,7 +20,7 @@ import axios from "axios";
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isErrorCredentials, setIsErrorCredentials] = useState(false);
+  const [isErrorCredentials, setIsErrorCredentials] = useState("");
   const [loginUser, setLoginUser] = useState({
     email: "",
     password: "",
@@ -48,23 +48,21 @@ const Login = () => {
         "http://localhost:3001/client/login",
         loginUser
       );
-      localStorage.setItem("user", JSON.stringify(data));
-      // If user credential is not in the database
-      const activeUser = localStorage.getItem("user");
-      const currentUser = JSON.parse(activeUser);
-      if (
-        currentUser?.data[0]?.email !== loginUser.email ||
-        currentUser?.data[0]?.password !== loginUser.password
-      ) {
-        setIsErrorCredentials(true);
+      // console.log(data.data.msg);
+      if (data.data.status == 404) {
+        // console.log(data.data.msg);
+        setIsErrorCredentials(data.data.msg);
+      } else {
+        localStorage.setItem("user", JSON.stringify(data.data.loginUser));
+        console.log();
+
         setTimeout(() => {
           setIsErrorCredentials(false);
         }, 3000);
-        setIsLoading(false);
-        return;
       }
+
       setIsLoading(false);
-      navigate("/");
+      navigate(-1);
     } catch (error) {
       console.log(error.message);
     }

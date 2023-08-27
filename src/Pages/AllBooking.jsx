@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function AllBooking() {
-  return (
-    <div>AllBooking</div>
-  )
+  return <div>AllBooking</div>;
 }
 
-export default AllBooking         
+export default AllBooking;

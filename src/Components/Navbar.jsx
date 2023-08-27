@@ -5,7 +5,12 @@ import {
   Flex,
   HStack,
   Heading,
+  IconButton,
   Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -15,28 +20,48 @@ const Navbar = () => {
   const currentUser = JSON.parse(activeUser);
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.setItem("user", null);
+    localStorage.removeItem("user");
     navigate("/");
   };
 
   return (
     <Flex h="56px" align="center" justify="space-between">
-      <Link as={RouterLink} to="/">
+      <Link as={RouterLink} _hover={{ textDecor: "none" }} to="/">
         <Heading size={{ base: "md", md: "lg" }}>HandyHelp</Heading>
       </Link>
       {currentUser ? (
         <HStack>
-          <Text>{currentUser?.data[0]?.email}</Text>
-          <Link as={RouterLink} to="/userprofile">
-            <Avatar size="sm" />
-          </Link>
-          <Button
-            colorScheme="twitter"
-            size={{ base: "sm", md: "md" }}
-            onClick={handleLogout}
-          >
-            Log out
-          </Button>
+          <Text>{currentUser?.email}</Text>
+
+          <Menu>
+            <MenuButton as={Avatar} size="sm" cursor="pointer" />
+            <MenuList zIndex={100}>
+              <MenuItem
+                as={RouterLink}
+                to="/userprofile"
+                _hover={{ textDecor: "none" }}
+              >
+                <Text as="span" ms={4}>
+                  Profile
+                </Text>
+              </MenuItem>
+              <MenuItem
+                as={RouterLink}
+                to="/allbookings"
+                _hover={{ textDecor: "none" }}
+              >
+                <Text as="span" ms={4}>
+                  All Bookings
+                </Text>
+              </MenuItem>
+
+              <MenuItem onClick={handleLogout}>
+                <Text ms={4} color="red" size={{ base: "sm", md: "md" }}>
+                  Log out
+                </Text>
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </HStack>
       ) : (
         <HStack>

@@ -6,10 +6,26 @@ import {
   MdCategory,
   MdLocationOn,
   MdPerson2,
-} from "react-icons/Md";
-import { Link } from "react-router-dom";
+} from "react-icons/md";
+import { Link, useLocation } from "react-router-dom";
 
-function BookCard({ img }) {
+function BookCard() {
+  const location = useLocation();
+  const receivedData = location.state;
+  console.log(receivedData.serviceDetails);
+
+  const {
+    _id,
+    businessName,
+    isVerified,
+    workers,
+    ratings,
+    freelancer,
+    image,
+    category,
+    charge,
+  } = receivedData.serviceDetails;
+
   return (
     <Link to={-1}>
       <Box
@@ -27,23 +43,41 @@ function BookCard({ img }) {
             borderRadius="5px"
             overflow="hidden"
           >
-            <Image src={img} alt="image here" w={"100%"} objectFit={'fill'} />
+            <Image
+              src={`http://localhost:3001/images/${image}`}
+              alt="image here"
+              w={"100%"}
+              objectFit={"fill"}
+            />
           </Box>
           <Box flexGrow={2}>
             <Text fontSize={{ base: "lg", md: "2xl" }} fontWeight={"bold"}>
-              Ruth Plumbing Service
+              {businessName}
             </Text>
-            <small>Ruth Sandras</small>
+            <small>
+              {" "}
+              {freelancer?.firstname} {freelancer?.lastname}
+            </small>
             {/* STARS */}
             <Box p={"2px"} display={"flex"} color={"orange.400"} my={1}>
-              <Box display={"inline-flex"} alignItems='center' bg={'orange'} px={2} color='white' borderRadius='4' mr='3'><MdStar /> 4.5</Box>
+              <Box
+                display={"inline-flex"}
+                alignItems="center"
+                bg={"orange"}
+                px={2}
+                color="white"
+                borderRadius="4"
+                mr="3"
+              >
+                <MdStar /> {ratings}
+              </Box>
               <Box
                 display={"inline-flex"}
                 alignItems={"center"}
-                color="green.500"
+                color={isVerified ? "green" : "red"}
               >
-                <MdVerifiedUser />
-                <small>Verified steve</small>
+                {isVerified && <MdVerifiedUser />}
+                <small>{isVerified ? "verified" : "Not verified"}</small>
               </Box>
             </Box>
             {/* END OF STARS */}
@@ -53,20 +87,19 @@ function BookCard({ img }) {
               display={"flex"}
               gap={{ base: 2, md: 5 }}
               alignItems="center"
-              flexWrap='wrap'
-              
+              flexWrap="wrap"
             >
-              <Box display={"inline-flex"} alignItems='center'>
+              <Box display={"inline-flex"} alignItems="center">
                 <MdCategory />
-                <small>Plumber</small>
+                <small>{category}</small>
               </Box>
-              <Box display={"inline-flex"} alignItems='center'>
+              <Box display={"inline-flex"} alignItems="center">
                 <MdLocationOn />
-                <small>Spintex comm18</small>
+                <small> {freelancer?.address?.city}</small>
               </Box>
-              <Box display={"inline-flex"} alignItems='center'>
+              <Box display={"inline-flex"} alignItems="center">
                 <MdPerson2 />
-                <small>Plumber</small>
+                <small>{workers}</small>
               </Box>
             </Box>
           </Box>
@@ -79,7 +112,7 @@ function BookCard({ img }) {
             bg={"green.500"}
             color="white"
           >
-            <Text>30gh</Text>
+            <Text>GH {charge}</Text>
           </Box>
         </Flex>
       </Box>
