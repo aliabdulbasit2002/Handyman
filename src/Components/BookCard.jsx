@@ -12,8 +12,12 @@ import { Link, useLocation } from "react-router-dom";
 function BookCard() {
   const location = useLocation();
   const receivedData = location.state;
+<<<<<<< HEAD
 
   console.log(receivedData && receivedData?.serviceDetails) ;
+=======
+  // console.log(receivedData.serviceDetails);
+>>>>>>> 72e505cff8502dbd03161db409d4d0c2175027bd
 
   const {
     _id,
@@ -46,6 +50,7 @@ function BookCard() {
           >
             <Image
               src={`http://localhost:3001/images/${image}`}
+              fallbackSrc="https://via.placeholder.com/150"
               alt="image here"
               w={"100%"}
               objectFit={"fill"}

@@ -21,6 +21,12 @@ import {
 import lady from "../assets/Images/cleaner.png";
 
 const Userprofile = () => {
+  const activeUser = localStorage.getItem("user");
+  const currentUser = JSON.parse(activeUser);
+
+  console.log(currentUser);
+  const { fullname, email, balance, address } = currentUser;
+
   return (
     <Box p={4}>
       <Box height="200px" bg="gray.400" pos="relative">
@@ -35,12 +41,12 @@ const Userprofile = () => {
       </Box>
       <Stack mt={70} direction={{ base: "column", md: "row" }}>
         <DetailsCard
-          fullname="Mary Roland"
-          email="maryroland@email.com"
-          address="mary street 24"
+          fullname={fullname}
+          email={email}
+          address={address?.town}
           tel="023864728"
         />
-        <Deposit balance="400" />
+        <Deposit balance={balance} />
       </Stack>
     </Box>
   );

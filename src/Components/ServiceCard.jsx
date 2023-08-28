@@ -26,7 +26,7 @@ function ServiceCard({
       as={ReactLink}
       to={serviceProfile}
       shadow={"md"}
-      textDecor={"none"}
+      textDecoration={"none"}
       position={"relative"}
       overflow={"hidden"}
       rounded={10}

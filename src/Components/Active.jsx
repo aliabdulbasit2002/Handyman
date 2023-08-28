@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   SimpleGrid,
@@ -7,6 +7,7 @@ import {
   Text,
   Spacer,
   Image,
+  Tag,
 } from "@chakra-ui/react";
 import {
   MdStar,
@@ -17,19 +18,36 @@ import {
 } from "react-icons/md";
 import cleanerImg from "../assets/Images/cleaner.png";
 
-function Active() {
+function Active({
+  businessName,
+  name,
+  category,
+  rating,
+  employees,
+  date,
+  location,
+  description,
+  isVerified,
+}) {
   return (
     <Box bg="white" p="5" borderRadius={10} my="5" shadow="md">
-      <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
         <Box borderRadius="10">
-          <Image src={cleanerImg} w={{ base: "100%", md: "50%" }} />
+          <Image
+            src={cleanerImg}
+            fallbackSrc="https://via.placeholder.com/150"
+            // w={{ base: "100%", md: "50%" }}
+            h={{ base: "150px", md: "200px" }}
+            objectFit="cover"
+            mx={{ md: "auto" }}
+          />
         </Box>
 
         <Box>
           <Text fontSize={{ base: "lg", md: "2xl" }} fontWeight={"bold"}>
-            Ruth Plumbing Service
+            {businessName}
           </Text>
-          <Text>Ruth Sandras</Text>
+          <Text>{name}</Text>
           {/* STARS */}
           <Box p={"2px"} display={"flex"} color={"orange.400"} my={1}>
             <Box
@@ -41,15 +59,15 @@ function Active() {
               borderRadius="4"
               mr="3"
             >
-              <MdStar /> 4.5
+              <MdStar /> {rating}
             </Box>
             <Box
               display={"inline-flex"}
               alignItems={"center"}
-              color="green.500"
+              color={isVerified ? "green" : "red"}
             >
-              <MdVerifiedUser />
-              <Text>Verified</Text>
+              {isVerified && <MdVerifiedUser />}
+              <Text>{isVerified ? "verified" : "Not verified"}</Text>
             </Box>
           </Box>
           <Box
@@ -61,15 +79,15 @@ function Active() {
           >
             <Box display={"inline-flex"} alignItems="center">
               <MdCategory />
-              <small>Plumber</small>
+              <small>{category}</small>
             </Box>
             <Box display={"inline-flex"} alignItems="center">
               <MdLocationOn />
-              <small>Spintex comm18</small>
+              <small>{location}</small>
             </Box>
             <Box display={"inline-flex"} alignItems="center">
               <MdPerson2 />
-              <small>Plumber</small>
+              <small>{employees}</small>
             </Box>
           </Box>
         </Box>
@@ -82,26 +100,26 @@ function Active() {
             <Text as={"span"} fontWeight="bold" color={"gray"}>
               Service :
             </Text>{" "}
-            Plumbing
+            {category}
           </Box>
           <Box>
             <Text as={"span"} fontWeight="bold" color={"gray"}>
               Date & Time :
             </Text>{" "}
-            2023-05-12 12:15
+            {date}
           </Box>
           <Box>
             <Text as={"span"} fontWeight="bold" color={"gray"}>
               Description :
             </Text>{" "}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, ullam!
+            {description}
           </Box>
         </Box>
       </SimpleGrid>
       <Box pt="5" textAlign={{ base: "none", md: "right" }}>
-        <Button colorScheme="yellow" color={"white"}>
+        <Tag bg="yellow" fontWeight="semibold" py={3}>
           {"Awaiting Confirmation"}
-        </Button>
+        </Tag>
         <Button colorScheme="red" color={"white"} ml="2">
           {"Cancel"}
         </Button>
