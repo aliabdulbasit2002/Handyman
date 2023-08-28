@@ -15,7 +15,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AiTwotoneStar } from "react-icons/ai";
-import { MdOutlineCleaningServices, MdVerified } from "react-icons/md";
+import { MdOutlineCleaningServices, MdVerified,MdStar } from "react-icons/md";
 import { ImLocation } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import cleanerImg from "../assets/Images/cleaner.png";
@@ -47,73 +47,66 @@ const ServiceCardDetails = () => {
     image,
     comments,
     bio,
+    ratings
   } = serviceDetails;
 
-  console.log(comments);
   return (
-    <Box mb={6}>
+    <Box my={10}>
       {/* ServiceCardDetails details */}
       <Flex
         flexDir={{ base: "column", md: "row" }}
-        justify={{ md: "space-evenly" }}
+        // justify={{ md: "space-evenly" }}
         p={5}
+        gap={10}
         fontSize={{ base: "18px", md: "unset" }}
         ps={{ base: 4, md: 0 }}
       >
-        <Box w={{ base: "100%", md: "50%" }}>
+        <Box w={{ base:'100%',md:'50%' }} h={{base:'300px',md:'550px'}} overflow={'hidden'} borderRadius="3xl">
           <Image
-            boxSize="md"
-            borderRadius="3xl"
+            // boxSize="md"
+            
             src={`http://localhost:3001/images/${image}`}
-            fallbackSrc="https://via.placeholder.com/150"
-            h={{ base: "400px", md: "550px" }}
-            mx={{ md: "auto" }}
-            objectFit="contain"
+            fallbackSrc="https://via.placeholder.com/700"
+            // h={{ base: "400px", md: "550px" }}
+            // w={{base:'300px',md:'550px'}}
+            // mx={{ md: "auto" }}
+            objectFit="cover"
           />
         </Box>
         <Flex
           as={Box}
           flexDir="column"
-          justify={{ md: "space-evenly" }}
+          justify={{ md: "space-between" }}
           //   gap={5}
           w={{ md: "50%" }}
-          mt={4}
-          pb={5}
+          // mt={4}
+          // pb={5}
         >
-          <Heading fontSize={{ base: "3xl", md: "5xl" }}>
+          <Heading fontSize={{ base: "3xl", md: "6xl" }} textTransform={'capitalize'}>
             {businessName}
           </Heading>
-          <Box>
-            <Text
+
+          <Text
               color="gray.500"
-              fontWeight="bold"
-              fontSize={{ base: "x-large" }}
+              fontWeight="semibold"
+              fontSize={{ base: "3xl" }}
               textTransform="capitalize"
             >
               {freelancer?.firstname} {freelancer?.lastname}
             </Text>
-            <HStack>
-              <Icon
-                as={AiTwotoneStar}
-                boxSize={{ md: "28px" }}
-                color="yellow.600"
-              />
-              <Icon
-                as={AiTwotoneStar}
-                boxSize={{ md: "28px" }}
-                color="yellow.600"
-              />
-              <Icon
-                as={AiTwotoneStar}
-                boxSize={{ md: "28px" }}
-                color="yellow.600"
-              />
-              <Icon
-                as={AiTwotoneStar}
-                boxSize={{ md: "28px" }}
-                color="yellow.600"
-              />
-            </HStack>
+          <Box>
+            
+            <Box
+                display={"inline-flex"}
+                alignItems="center"
+                bg={"orange"}
+                px={2}
+                color="white"
+                borderRadius="4"
+                mr="3"
+              >
+                <MdStar /> {ratings}
+              </Box>
             <Box textAlign="start" mt={{ base: 0, md: 4 }}>
               <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
                 <MdOutlineCleaningServices /> {category}
@@ -148,7 +141,7 @@ const ServiceCardDetails = () => {
           <Button
             onClick={() => navigate("/Booking", { state: { serviceDetails } })}
             colorScheme="twitter"
-            mt={{ base: 3, md: 4 }}
+            // mt={{ base: 3, md: 4 }}
             w="200px"
           >
             Book Now

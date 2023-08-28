@@ -12,7 +12,8 @@ import { Link, useLocation } from "react-router-dom";
 function BookCard() {
   const location = useLocation();
   const receivedData = location.state;
-  console.log(receivedData.serviceDetails);
+
+  console.log(receivedData && receivedData?.serviceDetails) ;
 
   const {
     _id,
@@ -24,7 +25,7 @@ function BookCard() {
     image,
     category,
     charge,
-  } = receivedData.serviceDetails;
+  } = receivedData && receivedData?.serviceDetails;
 
   return (
     <Link to={-1}>

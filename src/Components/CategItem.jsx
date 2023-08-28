@@ -1,10 +1,12 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Box, Image, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function CategItem({ title, img }) {
+  
   return (
-    <Link to={'/singleCategory/plumber'}>
+    <Link to={`/singleCategory/${title}`}>
     
     <Box alignItems={'center'} display={'flex'} justifyContent={'center'} flexDirection={'column'}>
       <Box
