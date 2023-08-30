@@ -24,7 +24,7 @@ function BookCard() {
     image,
     category,
     charge,
-  } = receivedData.serviceDetails;
+  } = receivedData && receivedData?.serviceDetails;
 
   return (
     <Link to={-1}>

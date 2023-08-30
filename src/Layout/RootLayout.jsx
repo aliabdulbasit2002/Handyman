@@ -13,7 +13,7 @@ const RootLayout = () => {
         </Container>
       </Container>
   
-        <Container maxW="container.xl" px={0}>
+        <Container maxW="container.xl" px={0} >
           <Outlet />
         </Container>
     </>

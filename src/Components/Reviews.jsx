@@ -8,7 +8,7 @@ const Reviews = ({ customers }) => {
         <Flex key={index} mt={6} align="center" gap={3}>
           <Avatar />
           <Box>
-            <Heading as="h4">Heading</Heading>
+            <Heading as="h4">User</Heading>
             <Text>{customer.comment}</Text>
           </Box>
         </Flex>

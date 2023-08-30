@@ -1,5 +1,5 @@
 import { Box, Heading, Grid, SimpleGrid } from "@chakra-ui/react";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import CategItem from "../Components/CategItem";
 import { MdArrowBackIos } from "react-icons/md";
 
@@ -9,9 +9,11 @@ import electrician from "../assets/Images/electrician.png";
 import hairsalon from "../assets/Images/hairsalon.png";
 import painter from "../assets/Images/painter.png";
 import carpenter from "../assets/Images/carpenter.png";
-import { Link } from "react-router-dom";
+import { Link,useParams,useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function AllCatrgories() {
+
   return (
     <Box p={{ base: 5, md: 10 }} borderRadius="10px">
       <Heading color="gray.400" display={"inline-flex"} alignItems="center">
@@ -30,16 +32,16 @@ function AllCatrgories() {
       >
         <CategItem img={plumber} title={"Plumber"} />
         <CategItem img={cleaner} title={"Cleaner"} />
-        <CategItem img={electrician} title={"Electrician"} />
+        <CategItem img={electrician} title={"Mechanic"} />
         <CategItem img={hairsalon} title={"Salon"} />
         <CategItem img={painter} title={"Painter"} />
-        <CategItem img={carpenter} title={"Carpenter"} />
-        <CategItem img={plumber} title={"Plumber"} />
-        <CategItem img={cleaner} title={"Cleaner"} />
+        <CategItem img={carpenter} title={"Waste Manag..."} />
+        <CategItem img={plumber} title={"Driver"} />
+        <CategItem img={cleaner} title={"Home Care"} />
         <CategItem img={electrician} title={"Electrician"} />
-        <CategItem img={hairsalon} title={"Salon"} />
-        <CategItem img={painter} title={"Painter"} />
-        <CategItem img={carpenter} title={"Carpenter"} />
+        <CategItem img={hairsalon} title={"Gardener"} />
+        <CategItem img={painter} title={"Security"} />
+        <CategItem img={carpenter} title={"AC Repair"} />
       </SimpleGrid>
     </Box>
   );
