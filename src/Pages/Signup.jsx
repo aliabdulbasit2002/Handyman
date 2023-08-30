@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import {
   AbsoluteCenter,
   Box,
@@ -13,46 +13,46 @@ import {
   Link,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const Signup = () => {
-  const [registerUser, setRegisterUser] = useState({
-    fullname: "",
-    phone: "",
-    occupation: "",
-    email: "",
-    address: {
-      city: "accra",
-      town: "madina",
-    },
-    password: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
+  const toast = useToast();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterUser((prev) => ({ ...prev, [name]: value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+    reset,
+  } = useForm();
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
+
+  const handleRegister = async (data) => {
     try {
-      setIsLoading(true);
-      const data = await axios.post(
+      const res = await axios.post(
         "http://localhost:3001/client/newClient",
-        registerUser
+        data
       );
-      localStorage.setItem("user", JSON.stringify(data));
-      setIsLoading(false);
+      localStorage.setItem("user", JSON.stringify(res.data.loginUser));
       navigate("/");
-      // console.log(registerUser);
+      // console.log(data);
     } catch (error) {
-      console.log(error.message);
+      toast({
+        description: "Account not created",
+        status: "error",
+        colorScheme: "red",
+        duration: 4000,
+      });
     }
   };
 
@@ -69,15 +69,16 @@ const Signup = () => {
         <Heading textAlign="center" mb={4}>
           Register
         </Heading>
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleSubmit(handleRegister)}>
           <FormControl mt={3}>
             <FormLabel>Full Name</FormLabel>
             <Input
               type="text"
               variant="filled"
-              name="fullname"
-              onChange={handleChange}
+              id="fullname"
+              {...register("fullname", { required: "Fullname is required" })}
             />
+            <Text color="red">{errors.fullname?.message}</Text>
           </FormControl>
           <Stack mt={3} direction={{ base: "column", md: "row" }}>
             <FormControl>
@@ -85,18 +86,28 @@ const Signup = () => {
               <Input
                 type="number"
                 variant="filled"
-                name="phone"
-                onChange={handleChange}
+                id="phone"
+                {...register("phone", {
+                  required: "Phone No. is required",
+                  pattern: {
+                    value:
+                      "/^[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}$/im",
+                    message: "Invalid format",
+                  },
+                })}
               />
+              <Text color="red">{errors.phone?.message}</Text>
             </FormControl>
             <FormControl>
               <FormLabel>Occupation</FormLabel>
               <Input
                 type="text"
                 variant="filled"
-                name="occupation"
-                onChange={handleChange}
+                {...register("occupation", {
+                  required: "Occupation is required",
+                })}
               />
+              <Text color="red">{errors.occupation?.message}</Text>
             </FormControl>
           </Stack>
           <Stack mt={3} direction={{ base: "column", md: "row" }}>
@@ -105,18 +116,20 @@ const Signup = () => {
               <Input
                 type="test"
                 variant="filled"
-                name="registerUser.address.city"
-                onChange={handleChange}
+                id="city"
+                {...register("address.city", { required: "City is required" })}
               />
+              <Text color="red">{errors.address?.city?.message}</Text>
             </FormControl>
             <FormControl>
               <FormLabel>Town</FormLabel>
               <Input
                 type="text"
                 variant="filled"
-                name="registerUser.address.town"
-                onChange={handleChange}
+                id="town"
+                {...register("address.town", { required: "Town is required" })}
               />
+              <Text color="red">{errors.address?.town?.message}</Text>
             </FormControl>
           </Stack>
           <FormControl mt={3}>
@@ -124,25 +137,33 @@ const Signup = () => {
             <Input
               type="email"
               variant="filled"
-              name="email"
-              onChange={handleChange}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value:
+                    "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/",
+                  message: "Invalid email format",
+                },
+              })}
             />
+            <Text color="red">{errors.email?.message}</Text>
           </FormControl>
           <FormControl mt={3}>
             <FormLabel>Password</FormLabel>
             <Input
               type="password"
               variant="filled"
-              name="password"
-              onChange={handleChange}
+              id="password"
+              {...register("password", { required: "Password is required" })}
             />
+            <Text color="red">{errors.password?.message}</Text>
           </FormControl>
           <Button
             type="submit"
             colorScheme="twitter"
             mt={6}
             w="full"
-            isLoading={isLoading}
+            isLoading={isSubmitting}
           >
             Register
           </Button>
