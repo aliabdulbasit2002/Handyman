@@ -11,57 +11,46 @@ import {
   Input,
   Link,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [isErrorCredentials, setIsErrorCredentials] = useState("");
-  const [loginUser, setLoginUser] = useState({
-    email: "",
-    password: "",
-  });
   const navigate = useNavigate();
+  const toast = useToast();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setLoginUser((prev) => ({ ...prev, [name]: value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+    reset,
+  } = useForm();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    // If there is no values in the input
-    if (!loginUser.email || !loginUser.password) {
-      setIsError(true);
-      setTimeout(() => {
-        setIsError(false);
-      }, 3000);
-      return;
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
     }
+  }, [isSubmitSuccessful, reset]);
+
+  const handleLogin = async (data) => {
     try {
-      setIsLoading(true);
-      const data = await axios.post(
-        "http://localhost:3001/client/login",
-        loginUser
-      );
-      // console.log(data.data.msg);
-      if (data.data.status == 404) {
-        // console.log(data.data.msg);
-        setIsErrorCredentials(data.data.msg);
+      const res = await axios.post("http://localhost:3001/client/login", data);
+
+      if (res.data.status == 404) {
+        toast({
+          description: res.data.msg,
+          status: "error",
+          colorScheme: "red",
+          duration: 2500,
+          isClosable: true,
+        });
       } else {
-        localStorage.setItem("user", JSON.stringify(data.data.loginUser));
-        console.log();
-
-        setTimeout(() => {
-          setIsErrorCredentials(false);
-        }, 3000);
+        localStorage.setItem("user", JSON.stringify(res.data.loginUser));
       }
-
-      setIsLoading(false);
       navigate(-1);
     } catch (error) {
       console.log(error.message);
@@ -81,25 +70,24 @@ const Login = () => {
         <Heading textAlign="center" mb={4}>
           Log In
         </Heading>
-        <form onSubmit={handleLogin}>
-          {isError && (
-            <Text color="red.400" fontWeight="bold">
-              Enter email and password
-            </Text>
-          )}
-          {isErrorCredentials && (
-            <Text color="red.400" fontWeight="bold">
-              Wrong email or password
-            </Text>
-          )}
+        <form onSubmit={handleSubmit(handleLogin)}>
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input
               type="email"
               variant="filled"
               name="email"
-              onChange={handleChange}
+              id="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value:
+                    "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/",
+                  message: "Invalid email format",
+                },
+              })}
             />
+            <Text color="red">{errors.email?.message}</Text>
           </FormControl>
           <FormControl>
             <FormLabel>Password</FormLabel>
@@ -107,16 +95,17 @@ const Login = () => {
               type="password"
               variant="filled"
               name="password"
-              onChange={handleChange}
+              id="password"
+              {...register("password", { required: "Password is required" })}
             />
+            <Text color="red">{errors.password?.message}</Text>
           </FormControl>
           <Button
             type="submit"
             colorScheme="twitter"
             mt={6}
             w="full"
-            isLoading={isLoading}
-            disabled={!loginUser.email || !loginUser.password}
+            isLoading={isSubmitting}
           >
             Log In
           </Button>
