@@ -43,9 +43,9 @@ const Signup = () => {
         "http://localhost:3001/client/newClient",
         data
       );
-      localStorage.setItem("user", JSON.stringify(res.data.loginUser));
+      localStorage.setItem("user", JSON.stringify(res.data));
       navigate("/");
-      // console.log(data);
+      console.log(res.data);
     } catch (error) {
       toast({
         description: "Account not created",
