@@ -83,13 +83,13 @@ const Home = () => {
           columns={{ base: 2, md: 3, lg: 4 }}
           gap={{ base: 2, md: 5 }}
         >
-          {businesses.map((business) => {
+          {businesses.map((business,index) => {
             const { _id, businessName, freelancer, isVerified, image } =
               business;
             return (
               <ServiceCard
                 id={_id}
-                // key={id}
+                key={index}
                 img={image}
                 businessName={businessName}
                 location={freelancer.address.city}

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { customAlphabet } from "nanoid";
 import {
   Box,
   SimpleGrid,
@@ -8,6 +9,17 @@ import {
   Spacer,
   Image,
   Tag,
+  Input,
+  FormControl,
+  FormLabel,
+  Textarea,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   MdStar,
@@ -17,39 +29,130 @@ import {
   MdPerson2,
 } from "react-icons/md";
 import cleanerImg from "../assets/Images/cleaner.png";
+import axios from "axios";
 
-function Active({
-  businessName,
-  name,
-  category,
-  rating,
-  employees,
-  date,
-  location,
-  description,
-  isVerified,
-}) {
+function Active({ requestData }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  let fetchLocalStorage = localStorage.getItem("user");
+  const nanoid = customAlphabet("1234567890ABCEDF", 6);
+  let userId = JSON.parse(fetchLocalStorage);
+  let reqId = requestData._id;
+  const [payment, setPayment] = useState();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // INSERT NEW TRASACTION
+    let data = {
+      client: userId._id,
+      request: reqId,
+      date: new Date(),
+      transactionRef: nanoid(),
+      ...payment,
+    };
+    // FUNCTION TO HANGLE TRANSFER OF FUNDS TO FREELANCER
+    const newTrasaction = async () => {
+      await axios
+        .post("http://localhost:3001/transaction", data)
+        .then((response) => {
+          console.log("new transaction", response.data);
+          comment()
+          updateBusinessBalance()
+          updateClientBalance()
+        })
+        .catch((err) => {
+          // console.log(err.message)
+        });
+    };
+
+  
+    newTrasaction();
+
+    // UPDATE FREELANCER BALANCE
+    const updateBusinessBalance=async()=>{
+      const databody =  {amount:payment.amount}
+      await axios.patch(`http://localhost:3001/business/addBalance/${requestData.business._id}`, databody)
+        .then((_response) => {
+          console.log("new comment");
+        })
+        .catch((err) => {
+          alert(err.message)
+        });
+    }
+
+    // DEDUCT FROM USER BALANCE
+    const updateClientBalance=async()=>{
+      const databody =  {amount:payment.amount}
+      await axios.patch(`http://localhost:3001/client/deductBalance/${userId._id}`, databody)
+        .then((_response) => {
+          console.log("new comment");
+        })
+        .catch((err) => {
+          alert(err.message)
+        });
+    }
+
+    // INSERT NEW COMMENT
+    const comment=async()=>{
+      const databody =  {business:requestData.business._id,client: userId._id,comment:payment.review}
+      await axios.post("http://localhost:3001/comments", databody)
+        .then((response) => {
+          console.log("new comment");
+        })
+        .catch((err) => {
+          alert(err.message)
+        });
+    }
+  };
+
+  const cancelRequest=async()=>{
+      await axios.delete(`http://localhost:3001/request/deleteRequest/${reqId}`)
+        .then((response) => {
+          console.log("Request Deleted");
+        })
+        .catch((err) => {
+          alert(err.message)
+        });
+    
+  }
+
   return (
     <Box bg="white" p="5" borderRadius={10} my="5" shadow="md">
       <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
-        <Box borderRadius="10">
+        <Box
+          borderRadius="10"
+          textAlign={{ base: "center" }}
+          h={{ base: "250px", md: "350px" }}
+          overflow="hidden"
+        >
           <Image
             src={cleanerImg}
             fallbackSrc="https://via.placeholder.com/150"
             // w={{ base: "100%", md: "50%" }}
-            h={{ base: "150px", md: "200px" }}
-            objectFit="cover"
+            // h={{ base: "250px", md: "200px" }}
+            objectFit="contain"
             mx={{ md: "auto" }}
           />
         </Box>
-
+        {/* BUSINESS INFO */}
         <Box>
-          <Text fontSize={{ base: "lg", md: "2xl" }} fontWeight={"bold"}>
-            {businessName}
+          <Text
+            fontSize={{ base: "xl", md: "3xl" }}
+            mb={{ base: 3, md: 10 }}
+            fontWeight={"bold"}
+            textTransform="capitalize"
+          >
+            {requestData.business.businessName}
           </Text>
-          <Text>{name}</Text>
+          <Text noOfLines={[1, 2, 3]} mb={{ base: 3, md: 5 }}>
+            {requestData.business.bio}
+          </Text>
           {/* STARS */}
-          <Box p={"2px"} display={"flex"} color={"orange.400"} my={1}>
+          <Box
+            p={"2px"}
+            display={"flex"}
+            color={"orange.400"}
+            mb={{ base: 3, md: 10 }}
+          >
             <Box
               display={"inline-flex"}
               alignItems="center"
@@ -59,71 +162,156 @@ function Active({
               borderRadius="4"
               mr="3"
             >
-              <MdStar /> {rating}
+              <MdStar /> {requestData.business.ratings}
             </Box>
             <Box
               display={"inline-flex"}
               alignItems={"center"}
-              color={isVerified ? "green" : "red"}
+              color={requestData.business.isVerified ? "green" : "red"}
             >
-              {isVerified && <MdVerifiedUser />}
-              <Text>{isVerified ? "verified" : "Not verified"}</Text>
+              {requestData.business.isVerified && <MdVerifiedUser />}
+              <Text>
+                {requestData.business.isVerified ? "verified" : "Not verified"}
+              </Text>
             </Box>
           </Box>
+          <Text overflow={"hidden"}>
+            Experience : {requestData.business.yearsOfExpr}yrs
+          </Text>
           <Box
             mt={"7px"}
             display={"flex"}
             gap={{ base: 2, md: 5 }}
             alignItems="center"
             flexWrap={"wrap"}
+            fontSize={"xl"}
           >
             <Box display={"inline-flex"} alignItems="center">
               <MdCategory />
-              <small>{category}</small>
+              <small>{requestData.business.category}</small>
             </Box>
             <Box display={"inline-flex"} alignItems="center">
               <MdLocationOn />
-              <small>{location}</small>
+              <small>{"---"}</small>
             </Box>
             <Box display={"inline-flex"} alignItems="center">
               <MdPerson2 />
-              <small>{employees}</small>
+              <small>{requestData.business.workers}</small>
             </Box>
           </Box>
         </Box>
-
+        {/* BOOKING DETAILS */}
         <Box>
-          <Text fontSize={{ base: "lg", md: "2xl" }} fontWeight={"bold"}>
+          <Text
+            fontSize={{ base: "lg", md: "2xl" }}
+            fontWeight={"bold"}
+            mb={{ base: 0, md: 5 }}
+          >
             Booking Details
           </Text>
-          <Box>
+          <Box fontSize={{ base: "15px", md: "20px" }}>
             <Text as={"span"} fontWeight="bold" color={"gray"}>
               Service :
             </Text>{" "}
-            {category}
+            {requestData.business.category}
           </Box>
-          <Box>
+          <Box fontSize={{ base: "15px", md: "20px" }}>
             <Text as={"span"} fontWeight="bold" color={"gray"}>
               Date & Time :
             </Text>{" "}
-            {date}
+            {new Date(requestData.requestDate).toDateString()}
           </Box>
-          <Box>
+          <Box fontSize={{ base: "15px", md: "20px" }}>
+            <Text as={"span"} fontWeight="bold" color={"gray"}>
+              Location
+            </Text>{" "}
+            {requestData.address}
+          </Box>
+          <Box fontSize={{ base: "15px", md: "20px" }}>
             <Text as={"span"} fontWeight="bold" color={"gray"}>
               Description :
             </Text>{" "}
-            {description}
+            {requestData.description}
           </Box>
+          {/* BUTTONS */}
+          <Box pt="5" textAlign={{ base: "15px", md: "20px" }}>
+            <Tag
+              bg={requestData.requestStatus === "accepted" || requestData.requestStatus === "completed"  ? "green" : "yellow"}
+              color={
+                requestData.requestStatus === "accepted" || requestData.requestStatus === "completed"? "white" : "black"
+              }
+              fontWeight="semibold"
+              py={3}
+              textTransform={"capitalize"}
+            >
+              {requestData.requestStatus}
+            </Tag>
+            {requestData.requestStatus === "completed" ||
+            requestData.requestStatus === "accepted" ? (
+              <Button
+                onClick={onOpen}
+                colorScheme={
+                  requestData.requestStatus === "completed" ||  requestData.requestStatus === "accepted" ? "green" : "yellow"
+                }
+                color={"white"}
+                ml="2"
+              >
+                {"Send Pay"}
+              </Button>
+            ) : (
+              ""
+            )}
+            {requestData.requestStatus == "pending" ? (
+              <Button
+                colorScheme={
+                  requestData.requestStatus == "pending" ? "red" : "red"
+                }
+                color={"white"}
+                ml="2"
+                onClick={cancelRequest}
+              >
+                {"Cancel"}
+              </Button>
+            ) : (
+              ""
+            )}
+          </Box>
+          {/* END OF BUTTONS */}
         </Box>
       </SimpleGrid>
-      <Box pt="5" textAlign={{ base: "none", md: "right" }}>
-        <Tag bg="yellow" fontWeight="semibold" py={3}>
-          {"Awaiting Confirmation"}
-        </Tag>
-        <Button colorScheme="red" color={"white"} ml="2">
-          {"Cancel"}
-        </Button>
-      </Box>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center">
+            Send To : {requestData.business.businessName}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <form mt={5} onSubmit={handleSubmit}>
+              <FormLabel>Amount to Pay</FormLabel>
+              <Input
+                placeholder="e.g 200"
+                type="number"
+                mb={4}
+                onChange={(e) =>
+                  setPayment({ ...payment, amount: e.target.value })
+                }
+              />
+              <Textarea
+                placeholder="Review"
+                mb={4}
+                onChange={(e) =>
+                  setPayment({ ...payment, review: e.target.value })
+                }
+              />
+              <Button type="submit" w={"100%"} colorScheme="blue">
+                Pay
+              </Button>
+            </form>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

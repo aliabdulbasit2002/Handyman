@@ -17,12 +17,11 @@ function ActiveBooking() {
     // let userData = JSON.parse(userId);
     const requestData = async () => {
       const data = await axios.get(
-        "http://localhost:3001/request/requestById",
-      );
-      setRequests(data);
+        `http://localhost:3001/request/requestById/${userData._id}`);
+      setRequests(data.data);
     };
     requestData();
-  }, []);
+  },[requests]);
 
   return (
     <Box p={{ base: 2, md: 5 }}>
@@ -37,23 +36,14 @@ function ActiveBooking() {
       {/* LIST OF ACTIVE BOOKINGS */}
       {requests &&
         requests.map((request, index) => {
-          const { business, client, description, address, requestDate } =
-            request;
           return (
             <Active
               key={index}
-              businessName={business?.businessName}
-              name={client?.fullname}
-              category={business?.category}
-              rating={business?.ratings}
-              employees={business?.workers}
-              date={new Date(requestDate).toDateString()}
-              location={address}
-              description={description}
-              isVerified={business?.isVerified}
+              requestData={request}
             />
           );
         })}
+        {requests.length <= 0 && 'No Data here'}
     </Box>
   );
 }
