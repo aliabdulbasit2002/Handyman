@@ -26,15 +26,24 @@ import axios from "axios";
 
 const ServiceCardDetails = () => {
   const [serviceDetails, setServiceDetails] = useState([]);
+  const [comment,setComment] = useState([])
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const serviceDetailsData = async () => {
       const { data } = await axios.get("http://localhost:3001/business/" + id);
-      // console.log(data.data);
       setServiceDetails(data.data.singleBusiness);
     };
+
+    // FEETCH COMMENTS FOR THIS BUSINESS
+    const serviceComments = async () => {
+      const { data } = await axios.get("http://localhost:3001/comments/" + id);
+      setComment(data);
+      console.log(data)
+    };
+    serviceComments()
+
     serviceDetailsData();
   }, []);
 
@@ -163,7 +172,7 @@ const ServiceCardDetails = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Reviews customers={comments} />
+            <Reviews customers={comment} />
           </TabPanel>
           <TabPanel>
             <Text>{bio}</Text>

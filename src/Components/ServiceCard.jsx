@@ -57,7 +57,7 @@ function ServiceCard({
           </Text>
           <Spacer />
 
-          <small textDecor="none">View Profile</small>
+          <small>View Profile</small>
         </Flex>
 
         <Box p={"0px"} color={"gray.800"}>

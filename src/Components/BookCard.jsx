@@ -15,7 +15,6 @@ function BookCard() {
   // console.log(receivedData.serviceDetails);
 
   const {
-    _id,
     businessName,
     isVerified,
     workers,
