@@ -21,27 +21,28 @@ import plumber2 from "../assets/Images/plumber2.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import BookCard from "../Components/BookCard";
+import { useForm } from "react-hook-form";
 
 function Booking() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [bookingInfo, setBookingInfo] = useState({});
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    const activeUser = localStorage.getItem("user");
-    const currentUser = JSON.parse(activeUser);
-    if (!currentUser) {
-      return navigate("/login");
-    }
-    const checkValues = Object.values(bookingInfo).every((value) => !value);
-    if (checkValues === true) {
-      alert("Fill on the fo rm");
-      return;
-    }
-    console.log(bookingInfo);
-    navigate("/ActiveBooking");
-
-    onOpen();
+  const onSubmit = (data) => {
+    // const activeUser = localStorage.getItem("user");
+    // const currentUser = JSON.parse(activeUser);
+    // if (!currentUser) {
+    //   return navigate("/login");
+    // }
+    // const checkValues = Object.values(bookingInfo).every((value) => !value);
+    // if (checkValues === true) {
+    //   alert("Fill on the fo rm");
+    //   return;
+    // }
+    // console.log(bookingInfo);
+    // navigate("/ActiveBooking");
+    // onOpen();
+    console.log(data);
   };
 
   const dateToday = () => {
@@ -53,6 +54,13 @@ function Booking() {
     const minutes = String(currentDate.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
+
+  // Hook form
+  const {
+    register,
+    formState: { isLoading },
+    handleSubmit,
+  } = useForm();
 
   const getUserLiveLocation = () => {
     navigator.permissions
@@ -91,7 +99,7 @@ function Booking() {
       {/* FORM */}
       <Box bg="white" p={5} my={5} shadow="lg" borderRadius="10px">
         <Text> Enter Details</Text>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <SimpleGrid
             columns={{ base: 1, md: 4 }}
             gap={{ base: 2, md: 5 }}
@@ -102,28 +110,17 @@ function Booking() {
               <Input
                 type="datetime-local"
                 min={dateToday()}
-                onChange={(e) =>
-                  setBookingInfo({ ...bookingInfo, datetime: e.target.value })
-                }
+                id="date"
+                {...register("date")}
               />
             </FormControl>
             <FormControl>
               <FormLabel>Address</FormLabel>
-              <Input
-                type="address"
-                onChange={(e) =>
-                  setBookingInfo({ ...bookingInfo, address: e.target.value })
-                }
-              />
+              <Input type="address" id="address" {...register("address")} />
             </FormControl>
             <FormControl>
               <FormLabel>Phone</FormLabel>
-              <Input
-                type="Number"
-                onChange={(e) =>
-                  setBookingInfo({ ...bookingInfo, phone: e.target.value })
-                }
-              />
+              <Input type="Number" id="phone" {...register("phone")} />
             </FormControl>
             <Button
               colorScheme="twitter"
@@ -134,18 +131,14 @@ function Booking() {
               Use Current Location
             </Button>
           </SimpleGrid>
-          <Textarea
-            placeholder="Description"
-            onChange={(e) =>
-              setBookingInfo({ ...bookingInfo, description: e.target.value })
-            }
-          />
+          <Textarea placeholder="Description" {...register("description")} />
 
           <Button
             colorScheme="twitter"
             mt={{ base: 2, md: 6 }}
             w="50"
-            onClick={handleSubmit}
+            onClick={onSubmit}
+            isLoading={isLoading}
           >
             Send Request
           </Button>
