@@ -4,6 +4,7 @@ import Active from "../Components/Active";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import axios from "axios";
+import BaseUrl from "../api/api";
 
 function ActiveBooking() {
   // GET USER ID FROM LOCALSTORAGE
@@ -17,7 +18,7 @@ function ActiveBooking() {
     // let userData = JSON.parse(userId);
     const requestData = async () => {
       const data = await axios.get(
-        `https://handyhelp.onrender.com/request/requestById/${userData._id}`
+        `${BaseUrl}/request/requestById/${userData._id}`
       );
       setRequests(data.data);
     };

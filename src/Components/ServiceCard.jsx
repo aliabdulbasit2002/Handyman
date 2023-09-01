@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { MdLocationOn, MdStar, MdVerified } from "react-icons/md";
 import { Link as ReactLink } from "react-router-dom";
+import BaseUrl from "../api/api";
 
 function ServiceCard({
   id,
@@ -41,7 +42,7 @@ function ServiceCard({
         alignItems="center"
       >
         <Image
-          src={`https://handyhelp.onrender.com/images/${img}`}
+          src={`${BaseUrl}/images/${img}`}
           fallbackSrc="https://via.placeholder.com/150"
           w="100%"
           h="100%"

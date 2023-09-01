@@ -17,6 +17,7 @@ import {
 } from "react-icons/md";
 import cleanerImg from "../assets/Images/cleaner.png";
 import { Link } from "react-router-dom";
+import BaseUrl from "../api/api";
 
 function CategoryListCard({ item }) {
   return (
@@ -25,7 +26,7 @@ function CategoryListCard({ item }) {
         <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
           <Box borderRadius="10" w={"150px"} h={"150px"} overflow={"hidden"}>
             <Image
-              src={`https://handyhelp.onrender.com/images/${item.image}`}
+              src={`${BaseUrl}/images/${item.image}`}
               w={{ base: "100%" }}
               fallbackSrc="https://via.placeholder.com/150"
               objectFit={"cover"}

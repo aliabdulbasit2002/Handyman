@@ -23,6 +23,7 @@ import { customAlphabet } from "nanoid";
 import BookCard from "../Components/BookCard";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import BaseUrl from "../api/api";
 
 function Booking() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,10 +53,7 @@ function Booking() {
     console.log(request);
 
     try {
-      const res = await axios.post(
-        "https://handyhelp.onrender.com/request",
-        request
-      );
+      const res = await axios.post(`${BaseUrl}/request`, request);
       // navigate(-1);
     } catch (error) {
       console.log(error.message);

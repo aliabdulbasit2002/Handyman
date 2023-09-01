@@ -23,6 +23,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Reviews from "../Components/Reviews";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import BaseUrl from "../api/api";
 
 const ServiceCardDetails = () => {
   const [serviceDetails, setServiceDetails] = useState([]);
@@ -32,17 +33,13 @@ const ServiceCardDetails = () => {
 
   useEffect(() => {
     const serviceDetailsData = async () => {
-      const { data } = await axios.get(
-        "https://handyhelp.onrender.com/business/" + id
-      );
+      const { data } = await axios.get(`${BaseUrl}/business/` + id);
       setServiceDetails(data.data.singleBusiness);
     };
 
     // FEETCH COMMENTS FOR THIS BUSINESS
     const serviceComments = async () => {
-      const { data } = await axios.get(
-        "https://handyhelp.onrender.com/comments/" + id
-      );
+      const { data } = await axios.get(`${BaseUrl}/comments/` + id);
       setComment(data);
       // console.log(data)
     };
@@ -83,7 +80,7 @@ const ServiceCardDetails = () => {
           <Image
             // boxSize="md"
 
-            src={`https://handyhelp.onrender.com/images/${image}`}
+            src={`${BaseUrl}/images/${image}`}
             fallbackSrc="https://via.placeholder.com/700"
             // h={{ base: "400px", md: "550px" }}
             // w={{base:'300px',md:'550px'}}

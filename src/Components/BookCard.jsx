@@ -8,6 +8,7 @@ import {
   MdPerson2,
 } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
+import BaseUrl from "../api/api";
 
 function BookCard() {
   const location = useLocation();
@@ -43,7 +44,7 @@ function BookCard() {
             overflow="hidden"
           >
             <Image
-              src={`https://handyhelp.onrender.com/images/${image}`}
+              src={`${BaseUrl}/images/${image}`}
               fallbackSrc="https://via.placeholder.com/150"
               alt="image here"
               w={"100%"}

@@ -31,9 +31,9 @@ import {
   MdLocationOn,
   MdPerson2,
 } from "react-icons/md";
-import cleanerImg from "../assets/Images/cleaner.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BaseUrl from "../api/api";
 
 function Active({ requestData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,7 +58,7 @@ function Active({ requestData }) {
     // FUNCTION TO HANGLE TRANSFER OF FUNDS TO FREELANCER
     const newTrasaction = async () => {
       await axios
-        .post("http://localhost:3001/transaction", data)
+        .post(`${BaseUrl}/transaction`, data)
         .then((response) => {
           console.log("new transaction", response.data);
           comment();
@@ -87,7 +87,7 @@ function Active({ requestData }) {
       const databody = { amount: payment.amount };
       await axios
         .patch(
-          `http://localhost:3001/business/addBalance/${requestData.business._id}`,
+          `${BaseUrl}/business/addBalance/${requestData.business._id}`,
           databody
         )
         .then((_response) => {
@@ -102,10 +102,7 @@ function Active({ requestData }) {
     const updateClientBalance = async () => {
       const databody = { amount: payment.amount };
       await axios
-        .patch(
-          `http://localhost:3001/client/deductBalance/${userId._id}`,
-          databody
-        )
+        .patch(`${BaseUrl}/client/deductBalance/${userId._id}`, databody)
         .then((_response) => {
           console.log("new comment");
         })
@@ -118,7 +115,7 @@ function Active({ requestData }) {
     const updateReq = async () => {
       const databody = { status: "done" };
       await axios
-        .patch(`http://localhost:3001/request/editRequest/${reqId}`, databody)
+        .patch(`${BaseUrl}/request/editRequest/${reqId}`, databody)
         .then((_response) => {
           console.log("new comment");
         })
@@ -135,7 +132,7 @@ function Active({ requestData }) {
         comment: payment.review,
       };
       await axios
-        .post("http://localhost:3001/comments", databody)
+        .post(`${BaseUrl}/comments`, databody)
         .then((response) => {
           console.log("new comment");
         })
@@ -147,7 +144,7 @@ function Active({ requestData }) {
 
   const cancelRequest = async () => {
     await axios
-      .delete(`http://localhost:3001/request/deleteRequest/${reqId}`)
+      .delete(`${BaseUrl}/request/deleteRequest/${reqId}`)
       .then((response) => {
         console.log("Request Deleted");
       })
@@ -170,7 +167,7 @@ function Active({ requestData }) {
             bg="red"
           >
             <Image
-              src={`https://handyhelp.onrender.com/images/${requestData.business.image}`}
+              src={`${BaseUrl}/images/${requestData.business.image}`}
               fallbackSrc="https://via.placeholder.com/150"
               // w={{ base: "50%" }}
               // h={{ base: "250px", md: "200px" }}

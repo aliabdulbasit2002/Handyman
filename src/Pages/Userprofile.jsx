@@ -23,8 +23,6 @@ import lady from "../assets/Images/cleaner.png";
 const Userprofile = () => {
   const activeUser = localStorage.getItem("user");
   const currentUser = JSON.parse(activeUser);
-
-  console.log(currentUser);
   const { fullname, email, balance, address } = currentUser;
 
   return (

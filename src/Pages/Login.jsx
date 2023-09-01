@@ -18,6 +18,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import BaseUrl from "../api/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -38,10 +39,7 @@ const Login = () => {
 
   const handleLogin = async (data) => {
     try {
-      const res = await axios.post(
-        "https://handyhelp.onrender.com/client/login",
-        data
-      );
+      const res = await axios.post(`${BaseUrl}/client/login`, data);
 
       if (res.data.status == 404) {
         toast({

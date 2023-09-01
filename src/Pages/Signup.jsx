@@ -19,6 +19,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import BaseUrl from "../api/api";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -39,10 +40,7 @@ const Signup = () => {
 
   const handleRegister = async (data) => {
     try {
-      const res = await axios.post(
-        "https://handyhelp.onrender.com/client/newClient",
-        data
-      );
+      const res = await axios.post(`${BaseUrl}/client/newClient`, data);
       localStorage.setItem("user", JSON.stringify(res.data));
       navigate("/");
       console.log(res.data);

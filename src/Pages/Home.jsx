@@ -31,14 +31,13 @@ import "swiper/css";
 // import required modules
 import { Autoplay } from "swiper/modules";
 import axios from "axios";
+import BaseUrl from "../api/api";
 
 const Home = () => {
   const [businesses, setBusinesses] = useState([]);
   useEffect(() => {
     const businessesData = async () => {
-      const { data } = await axios.get(
-        "https://handyhelp.onrender.com/business"
-      );
+      const { data } = await axios.get(`${BaseUrl}/business`);
       setBusinesses(data);
     };
     businessesData();

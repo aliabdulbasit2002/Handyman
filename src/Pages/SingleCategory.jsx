@@ -7,17 +7,17 @@ import plumber2 from "../assets/Images/plumber2.jpg";
 import CategoryListCard from "../Components/CategoryListCard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import BaseUrl from "../api/api";
 
 function SingleCategory() {
   const [serviceDetails, setServiceDetails] = useState([]);
   const { singlecategory } = useParams();
-  console.log(singlecategory);
   const navigate = useNavigate();
 
   useEffect(() => {
     const serviceDetailsData = async () => {
       const data = await axios.get(
-        `https://handyhelp.onrender.com/business/getcatgory/${singlecategory}`
+        `${BaseUrl}/business/getcatgory/${singlecategory}`
       );
       setServiceDetails(data.data);
     };
