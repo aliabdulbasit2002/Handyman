@@ -1,1 +1,3 @@
-export default BaseUrl = "https://handyhelp.onrender.com";
+const BaseUrl = "https://handyhelp.onrender.com";
+
+export default BaseUrl
