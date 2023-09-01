@@ -17,11 +17,12 @@ function ActiveBooking() {
     // let userData = JSON.parse(userId);
     const requestData = async () => {
       const data = await axios.get(
-        `http://localhost:3001/request/requestById/${userData._id}`);
+        `http://localhost:3001/request/requestById/${userData._id}`
+      );
       setRequests(data.data);
     };
     requestData();
-  },[requests]);
+  }, [requests]);
 
   return (
     <Box p={{ base: 2, md: 5 }}>
@@ -34,16 +35,10 @@ function ActiveBooking() {
       {}
 
       {/* LIST OF ACTIVE BOOKINGS */}
-      {requests &&
-        requests.map((request, index) => {
-          return (
-            <Active
-              key={index}
-              requestData={request}
-            />
-          );
-        })}
-        {requests.length <= 0 && 'No Data here'}
+      {requests.map((request, index) => {
+        return <Active key={index} requestData={request} />;
+      })}
+      {requests.length <= 0 && "No Data here"}
     </Box>
   );
 }

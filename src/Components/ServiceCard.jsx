@@ -32,13 +32,21 @@ function ServiceCard({
       rounded={10}
       style={{ textDecoration: "none" }}
     >
-      <Box w="100%">
+      <Box
+        // w={{ base: "150px", md: "250px" }}
+        h={{ base: "150px", md: "250px" }}
+        overflow="hidden"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Image
           src={`http://localhost:3001/images/${img}`}
           fallbackSrc="https://via.placeholder.com/150"
           w="100%"
-          h={{ base: "250px", md: "300px" }}
-          objectFit={{ base: "contain", md: "cover" }}
+          h="100%"
+          // h={{ base: "250px", md: "300px" }}
+          objectFit="contain"
         />
       </Box>
 

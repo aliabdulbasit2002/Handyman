@@ -20,6 +20,9 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import {
   MdStar,
@@ -30,6 +33,7 @@ import {
 } from "react-icons/md";
 import cleanerImg from "../assets/Images/cleaner.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Active({ requestData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,6 +42,8 @@ function Active({ requestData }) {
   let userId = JSON.parse(fetchLocalStorage);
   let reqId = requestData._id;
   const [payment, setPayment] = useState();
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,234 +61,294 @@ function Active({ requestData }) {
         .post("http://localhost:3001/transaction", data)
         .then((response) => {
           console.log("new transaction", response.data);
-          comment()
-          updateBusinessBalance()
-          updateClientBalance()
+          comment();
+          updateBusinessBalance();
+          updateClientBalance();
+          updateReq();
+          toast({
+            description: "Payment successful",
+            status: "success",
+            duration: 5000,
+            colorScheme: "green",
+            isClosable: true,
+            position: "bottom",
+          });
+          navigate("/");
         })
         .catch((err) => {
           // console.log(err.message)
         });
     };
 
-  
     newTrasaction();
 
     // UPDATE FREELANCER BALANCE
-    const updateBusinessBalance=async()=>{
-      const databody =  {amount:payment.amount}
-      await axios.patch(`http://localhost:3001/business/addBalance/${requestData.business._id}`, databody)
+    const updateBusinessBalance = async () => {
+      const databody = { amount: payment.amount };
+      await axios
+        .patch(
+          `http://localhost:3001/business/addBalance/${requestData.business._id}`,
+          databody
+        )
         .then((_response) => {
           console.log("new comment");
         })
         .catch((err) => {
-          alert(err.message)
+          alert(err.message);
         });
-    }
+    };
 
     // DEDUCT FROM USER BALANCE
-    const updateClientBalance=async()=>{
-      const databody =  {amount:payment.amount}
-      await axios.patch(`http://localhost:3001/client/deductBalance/${userId._id}`, databody)
+    const updateClientBalance = async () => {
+      const databody = { amount: payment.amount };
+      await axios
+        .patch(
+          `http://localhost:3001/client/deductBalance/${userId._id}`,
+          databody
+        )
         .then((_response) => {
           console.log("new comment");
         })
         .catch((err) => {
-          alert(err.message)
+          alert(err.message);
         });
-    }
+    };
+
+    // DEDUCT FROM USER BALANCE
+    const updateReq = async () => {
+      const databody = { status: "done" };
+      await axios
+        .patch(`http://localhost:3001/request/editRequest/${reqId}`, databody)
+        .then((_response) => {
+          console.log("new comment");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    };
 
     // INSERT NEW COMMENT
-    const comment=async()=>{
-      const databody =  {business:requestData.business._id,client: userId._id,comment:payment.review}
-      await axios.post("http://localhost:3001/comments", databody)
+    const comment = async () => {
+      const databody = {
+        business: requestData.business._id,
+        client: userId._id,
+        comment: payment.review,
+      };
+      await axios
+        .post("http://localhost:3001/comments", databody)
         .then((response) => {
           console.log("new comment");
         })
         .catch((err) => {
-          alert(err.message)
+          alert(err.message);
         });
-    }
+    };
   };
 
-  const cancelRequest=async()=>{
-      await axios.delete(`http://localhost:3001/request/deleteRequest/${reqId}`)
-        .then((response) => {
-          console.log("Request Deleted");
-        })
-        .catch((err) => {
-          alert(err.message)
-        });
-    
-  }
+  const cancelRequest = async () => {
+    await axios
+      .delete(`http://localhost:3001/request/deleteRequest/${reqId}`)
+      .then((response) => {
+        console.log("Request Deleted");
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
   return (
     <Box bg="white" p="5" borderRadius={10} my="5" shadow="md">
-      <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
-        <Box
-          borderRadius="10"
-          textAlign={{ base: "center" }}
-          h={{ base: "250px", md: "350px" }}
-          overflow="hidden"
-        >
-          <Image
-            src={cleanerImg}
-            fallbackSrc="https://via.placeholder.com/150"
-            // w={{ base: "100%", md: "50%" }}
-            // h={{ base: "250px", md: "200px" }}
-            objectFit="contain"
-            mx={{ md: "auto" }}
-          />
-        </Box>
+      <Grid templateColumns="repeat(12,1fr)" gap={4}>
+        <GridItem colSpan={{ base: 12, md: 4 }}>
+          <Box
+            borderRadius="10"
+            textAlign={{ base: "center" }}
+            w={{ base: "150px", md: "200px" }}
+            // h="100%"
+            overflow="hidden"
+            mx="auto"
+            bg="red"
+          >
+            <Image
+              src={`http://localhost:3001/images/${requestData.business.image}`}
+              fallbackSrc="https://via.placeholder.com/150"
+              // w={{ base: "50%" }}
+              // h={{ base: "250px", md: "200px" }}
+              objectFit="cover"
+              mx={{ base: "auto" }}
+            />
+          </Box>
+        </GridItem>
         {/* BUSINESS INFO */}
-        <Box>
-          <Text
-            fontSize={{ base: "xl", md: "3xl" }}
-            mb={{ base: 3, md: 10 }}
-            fontWeight={"bold"}
-            textTransform="capitalize"
-          >
-            {requestData.business.businessName}
-          </Text>
-          <Text noOfLines={[1, 2, 3]} mb={{ base: 3, md: 5 }}>
-            {requestData.business.bio}
-          </Text>
-          {/* STARS */}
-          <Box
-            p={"2px"}
-            display={"flex"}
-            color={"orange.400"}
-            mb={{ base: 3, md: 10 }}
-          >
+        <GridItem colSpan={{ base: 6, md: 4 }}>
+          <Box>
+            <Text
+              fontSize={{ base: "xl", md: "3xl" }}
+              mb={{ base: 3, md: 10 }}
+              fontWeight={"bold"}
+              textTransform="capitalize"
+            >
+              {requestData.business.businessName}
+            </Text>
+            <Text noOfLines={[1, 2, 3]} mb={{ base: 3, md: 5 }}>
+              {requestData.business.bio}
+            </Text>
+            {/* STARS */}
             <Box
-              display={"inline-flex"}
+              p={"2px"}
+              display={"flex"}
+              color={"orange.400"}
+              mb={{ base: 3, md: 5 }}
+            >
+              <Box
+                display={"inline-flex"}
+                alignItems="center"
+                bg={"orange"}
+                px={2}
+                color="white"
+                borderRadius="4"
+                mr="3"
+              >
+                <MdStar /> {requestData.business.ratings}
+              </Box>
+              <Box
+                display={"inline-flex"}
+                alignItems={"center"}
+                color={requestData.business.isVerified ? "green" : "red"}
+              >
+                {requestData.business.isVerified && <MdVerifiedUser />}
+                <Text>
+                  {requestData.business.isVerified
+                    ? "verified"
+                    : "Not verified"}
+                </Text>
+              </Box>
+            </Box>
+            <Text overflow={"hidden"}>
+              Experience : {requestData.business.yearsOfExpr}yrs
+            </Text>
+            <Box
+              mt={"7px"}
+              display={"flex"}
+              gap={{ base: 2, md: 5 }}
               alignItems="center"
-              bg={"orange"}
-              px={2}
-              color="white"
-              borderRadius="4"
-              mr="3"
+              flexWrap={"wrap"}
+              fontSize={"xl"}
             >
-              <MdStar /> {requestData.business.ratings}
-            </Box>
-            <Box
-              display={"inline-flex"}
-              alignItems={"center"}
-              color={requestData.business.isVerified ? "green" : "red"}
-            >
-              {requestData.business.isVerified && <MdVerifiedUser />}
-              <Text>
-                {requestData.business.isVerified ? "verified" : "Not verified"}
-              </Text>
+              <Box display={"inline-flex"} alignItems="center">
+                <MdCategory />
+                <small>{requestData.business.category}</small>
+              </Box>
+              <Box display={"inline-flex"} alignItems="center">
+                <MdLocationOn />
+                <small>{"---"}</small>
+              </Box>
+              <Box display={"inline-flex"} alignItems="center">
+                <MdPerson2 />
+                <small>{requestData.business.workers}</small>
+              </Box>
             </Box>
           </Box>
-          <Text overflow={"hidden"}>
-            Experience : {requestData.business.yearsOfExpr}yrs
-          </Text>
-          <Box
-            mt={"7px"}
-            display={"flex"}
-            gap={{ base: 2, md: 5 }}
-            alignItems="center"
-            flexWrap={"wrap"}
-            fontSize={"xl"}
-          >
-            <Box display={"inline-flex"} alignItems="center">
-              <MdCategory />
-              <small>{requestData.business.category}</small>
-            </Box>
-            <Box display={"inline-flex"} alignItems="center">
-              <MdLocationOn />
-              <small>{"---"}</small>
-            </Box>
-            <Box display={"inline-flex"} alignItems="center">
-              <MdPerson2 />
-              <small>{requestData.business.workers}</small>
-            </Box>
-          </Box>
-        </Box>
+        </GridItem>
         {/* BOOKING DETAILS */}
-        <Box>
-          <Text
-            fontSize={{ base: "lg", md: "2xl" }}
-            fontWeight={"bold"}
-            mb={{ base: 0, md: 5 }}
-          >
-            Booking Details
-          </Text>
-          <Box fontSize={{ base: "15px", md: "20px" }}>
-            <Text as={"span"} fontWeight="bold" color={"gray"}>
-              Service :
-            </Text>{" "}
-            {requestData.business.category}
-          </Box>
-          <Box fontSize={{ base: "15px", md: "20px" }}>
-            <Text as={"span"} fontWeight="bold" color={"gray"}>
-              Date & Time :
-            </Text>{" "}
-            {new Date(requestData.requestDate).toDateString()}
-          </Box>
-          <Box fontSize={{ base: "15px", md: "20px" }}>
-            <Text as={"span"} fontWeight="bold" color={"gray"}>
-              Location
-            </Text>{" "}
-            {requestData.address}
-          </Box>
-          <Box fontSize={{ base: "15px", md: "20px" }}>
-            <Text as={"span"} fontWeight="bold" color={"gray"}>
-              Description :
-            </Text>{" "}
-            {requestData.description}
-          </Box>
-          {/* BUTTONS */}
-          <Box pt="5" textAlign={{ base: "15px", md: "20px" }}>
-            <Tag
-              bg={requestData.requestStatus === "accepted" || requestData.requestStatus === "completed"  ? "green" : "yellow"}
-              color={
-                requestData.requestStatus === "accepted" || requestData.requestStatus === "completed"? "white" : "black"
-              }
-              fontWeight="semibold"
-              py={3}
-              textTransform={"capitalize"}
+        <GridItem colSpan={{ base: 6, md: 4 }}>
+          <Box>
+            <Text
+              fontSize={{ base: "lg", md: "2xl" }}
+              fontWeight={"bold"}
+              mb={{ base: 0, md: 5 }}
             >
-              {requestData.requestStatus}
-            </Tag>
-            {requestData.requestStatus === "completed" ||
-            requestData.requestStatus === "accepted" ? (
-              <Button
-                onClick={onOpen}
-                colorScheme={
-                  requestData.requestStatus === "completed" ||  requestData.requestStatus === "accepted" ? "green" : "yellow"
+              Booking Details
+            </Text>
+            <Box fontSize={{ base: "15px", md: "20px" }}>
+              <Text as={"span"} fontWeight="bold" color={"gray"}>
+                Service :
+              </Text>{" "}
+              {requestData.business.category}
+            </Box>
+            <Box fontSize={{ base: "15px", md: "20px" }}>
+              <Text as={"span"} fontWeight="bold" color={"gray"}>
+                Date & Time :
+              </Text>{" "}
+              {new Date(requestData.requestDate).toDateString()}
+            </Box>
+            <Box fontSize={{ base: "15px", md: "20px" }}>
+              <Text as={"span"} fontWeight="bold" color={"gray"}>
+                Location
+              </Text>{" "}
+              {requestData.address}
+            </Box>
+            <Box fontSize={{ base: "15px", md: "20px" }}>
+              <Text as={"span"} fontWeight="bold" color={"gray"}>
+                Description :
+              </Text>{" "}
+              {requestData.description}
+            </Box>
+            {/* BUTTONS */}
+            <Box pt="5" textAlign={{ base: "15px", md: "20px" }}>
+              <Tag
+                size="sm"
+                bg={
+                  requestData.requestStatus === "accepted" ||
+                  requestData.requestStatus === "completed"
+                    ? "green"
+                    : "yellow"
                 }
-                color={"white"}
-                ml="2"
-              >
-                {"Send Pay"}
-              </Button>
-            ) : (
-              ""
-            )}
-            {requestData.requestStatus == "pending" ? (
-              <Button
-                colorScheme={
-                  requestData.requestStatus == "pending" ? "red" : "red"
+                color={
+                  requestData.requestStatus === "accepted" ||
+                  requestData.requestStatus === "completed"
+                    ? "white"
+                    : "black"
                 }
-                color={"white"}
-                ml="2"
-                onClick={cancelRequest}
+                fontWeight="semibold"
+                py={3}
+                textTransform={"capitalize"}
               >
-                {"Cancel"}
-              </Button>
-            ) : (
-              ""
-            )}
+                {requestData.requestStatus}
+              </Tag>
+              {requestData.requestStatus === "completed" ||
+              requestData.requestStatus === "accepted" ? (
+                <Button
+                  onClick={onOpen}
+                  size="sm"
+                  colorScheme={
+                    requestData.requestStatus === "completed" ||
+                    requestData.requestStatus === "accepted"
+                      ? "green"
+                      : "yellow"
+                  }
+                  color={"white"}
+                  ml="2"
+                >
+                  {"Send Pay"}
+                </Button>
+              ) : (
+                ""
+              )}
+              {requestData.requestStatus == "pending" ? (
+                <Button
+                  colorScheme={
+                    requestData.requestStatus == "pending" ? "red" : "red"
+                  }
+                  color={"white"}
+                  ml="2"
+                  size="sm"
+                  onClick={cancelRequest}
+                >
+                  {"Cancel"}
+                </Button>
+              ) : (
+                ""
+              )}
+            </Box>
+            {/* END OF BUTTONS */}
           </Box>
-          {/* END OF BUTTONS */}
-        </Box>
-      </SimpleGrid>
+        </GridItem>
+      </Grid>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mx={3}>
           <ModalHeader textAlign="center">
             Send To : {requestData.business.businessName}
           </ModalHeader>

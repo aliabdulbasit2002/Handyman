@@ -15,7 +15,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AiTwotoneStar } from "react-icons/ai";
-import { MdOutlineCleaningServices, MdVerified,MdStar } from "react-icons/md";
+import { MdOutlineCleaningServices, MdVerified, MdStar } from "react-icons/md";
 import { ImLocation } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import cleanerImg from "../assets/Images/cleaner.png";
@@ -26,7 +26,7 @@ import axios from "axios";
 
 const ServiceCardDetails = () => {
   const [serviceDetails, setServiceDetails] = useState([]);
-  const [comment,setComment] = useState([])
+  const [comment, setComment] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -40,9 +40,9 @@ const ServiceCardDetails = () => {
     const serviceComments = async () => {
       const { data } = await axios.get("http://localhost:3001/comments/" + id);
       setComment(data);
-      console.log(data)
+      // console.log(data)
     };
-    serviceComments()
+    serviceComments();
 
     serviceDetailsData();
   }, []);
@@ -56,7 +56,7 @@ const ServiceCardDetails = () => {
     image,
     comments,
     bio,
-    ratings
+    ratings,
   } = serviceDetails;
 
   return (
@@ -70,10 +70,15 @@ const ServiceCardDetails = () => {
         fontSize={{ base: "18px", md: "unset" }}
         ps={{ base: 4, md: 0 }}
       >
-        <Box w={{ base:'100%',md:'50%' }} h={{base:'300px',md:'550px'}} overflow={'hidden'} borderRadius="3xl">
+        <Box
+          w={{ base: "100%", md: "50%" }}
+          h={{ base: "300px", md: "550px" }}
+          overflow={"hidden"}
+          borderRadius="3xl"
+        >
           <Image
             // boxSize="md"
-            
+
             src={`http://localhost:3001/images/${image}`}
             fallbackSrc="https://via.placeholder.com/700"
             // h={{ base: "400px", md: "550px" }}
@@ -91,31 +96,33 @@ const ServiceCardDetails = () => {
           // mt={4}
           // pb={5}
         >
-          <Heading fontSize={{ base: "3xl", md: "6xl" }} textTransform={'capitalize'}>
+          <Heading
+            fontSize={{ base: "3xl", md: "6xl" }}
+            textTransform={"capitalize"}
+          >
             {businessName}
           </Heading>
 
           <Text
-              color="gray.500"
-              fontWeight="semibold"
-              fontSize={{ base: "3xl" }}
-              textTransform="capitalize"
-            >
-              {freelancer?.firstname} {freelancer?.lastname}
-            </Text>
+            color="gray.500"
+            fontWeight="semibold"
+            fontSize={{ base: "3xl" }}
+            textTransform="capitalize"
+          >
+            {freelancer?.firstname} {freelancer?.lastname}
+          </Text>
           <Box>
-            
             <Box
-                display={"inline-flex"}
-                alignItems="center"
-                bg={"orange"}
-                px={2}
-                color="white"
-                borderRadius="4"
-                mr="3"
-              >
-                <MdStar /> {ratings}
-              </Box>
+              display={"inline-flex"}
+              alignItems="center"
+              bg={"orange"}
+              px={2}
+              color="white"
+              borderRadius="4"
+              mr="3"
+            >
+              <MdStar /> {ratings}
+            </Box>
             <Box textAlign="start" mt={{ base: 0, md: 4 }}>
               <Flex as={Text} align="center" fontSize={{ md: "24px" }} gap={2}>
                 <MdOutlineCleaningServices /> {category}

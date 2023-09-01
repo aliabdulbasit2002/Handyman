@@ -82,8 +82,9 @@ const Home = () => {
         <SimpleGrid
           columns={{ base: 2, md: 3, lg: 4 }}
           gap={{ base: 2, md: 5 }}
+          px={{ base: 2, md: 4 }}
         >
-          {businesses.map((business,index) => {
+          {businesses.map((business, index) => {
             const { _id, businessName, freelancer, isVerified, image } =
               business;
             return (

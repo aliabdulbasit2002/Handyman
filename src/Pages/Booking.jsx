@@ -19,28 +19,47 @@ import {
 import React, { useState } from "react";
 import plumber2 from "../assets/Images/plumber2.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { customAlphabet } from "nanoid";
 import BookCard from "../Components/BookCard";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function Booking() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [bookingInfo, setBookingInfo] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+  const receivedData = location.state;
+  const activeUser = localStorage.getItem("user");
+  const currentUser = JSON.parse(activeUser);
+  const nanoid = customAlphabet("1234567890ABCEDF", 6);
 
-  const onSubmit = (data) => {
-    // const activeUser = localStorage.getItem("user");
-    // const currentUser = JSON.parse(activeUser);
-    // if (!currentUser) {
-    //   return navigate("/login");
-    // }
-    // const checkValues = Object.values(bookingInfo).every((value) => !value);
-    // if (checkValues === true) {
-    //   alert("Fill on the fo rm");
-    //   return;
-    // }
+  // console.log(receivedData.serviceDetails._id);
+  let id = receivedData.serviceDetails._id;
+  let business = receivedData.serviceDetails;
+
+  const onSubmit = async (data) => {
+    if (!currentUser) {
+      return navigate("/login");
+    }
+    let request = {
+      business: business._id,
+      client: currentUser._id,
+      refNumber: nanoid(),
+      ...data,
+    };
+
+    console.log(request);
+
+    try {
+      const res = await axios.post("http://localhost:3001/request", request);
+      // navigate(-1);
+    } catch (error) {
+      console.log(error.message);
+    }
+
     // console.log(bookingInfo);
-    // navigate("/ActiveBooking");
+    navigate("/ActiveBooking");
     // onOpen();
     console.log(data);
   };
@@ -58,7 +77,7 @@ function Booking() {
   // Hook form
   const {
     register,
-    formState: { isLoading },
+    formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm();
 
@@ -108,19 +127,30 @@ function Booking() {
             <FormControl>
               <FormLabel>Date</FormLabel>
               <Input
-                type="datetime-local"
+                type="date"
                 min={dateToday()}
-                id="date"
-                {...register("date")}
+                id="requestDate"
+                {...register("requestDate", { required: "Date is required" })}
               />
+              <Text color="red">{errors.date?.message}</Text>
             </FormControl>
             <FormControl>
               <FormLabel>Address</FormLabel>
-              <Input type="address" id="address" {...register("address")} />
+              <Input
+                type="address"
+                id="address"
+                {...register("address", { required: "Address is required" })}
+              />
+              <Text color="red">{errors.address?.message}</Text>
             </FormControl>
             <FormControl>
               <FormLabel>Phone</FormLabel>
-              <Input type="Number" id="phone" {...register("phone")} />
+              <Input
+                type="Number"
+                id="phone"
+                {...register("phone", { required: "Phone no. is required" })}
+              />
+              <Text color="red">{errors.phone?.message}</Text>
             </FormControl>
             <Button
               colorScheme="twitter"
@@ -131,14 +161,21 @@ function Booking() {
               Use Current Location
             </Button>
           </SimpleGrid>
-          <Textarea placeholder="Description" {...register("description")} />
+          <Textarea
+            placeholder="Description"
+            {...register("description", {
+              required: "Please provide a description",
+            })}
+          />
+          <Text color="red">{errors.description?.message}</Text>
 
           <Button
             colorScheme="twitter"
             mt={{ base: 2, md: 6 }}
             w="50"
-            onClick={onSubmit}
-            isLoading={isLoading}
+            type="submit"
+            // onClick={onSubmit}
+            isLoading={isSubmitting}
           >
             Send Request
           </Button>

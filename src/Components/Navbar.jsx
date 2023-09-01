@@ -47,6 +47,15 @@ const Navbar = () => {
               </MenuItem>
               <MenuItem
                 as={RouterLink}
+                to="/ActiveBooking"
+                _hover={{ textDecor: "none" }}
+              >
+                <Text as="span" ms={4}>
+                  Active Bookings
+                </Text>
+              </MenuItem>
+              <MenuItem
+                as={RouterLink}
                 to="/allbookings"
                 _hover={{ textDecor: "none" }}
               >
