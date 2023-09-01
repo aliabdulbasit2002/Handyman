@@ -56,7 +56,13 @@ const Login = () => {
       }
       navigate(-1);
     } catch (error) {
-      console.log(error.message);
+      toast({
+        description: "Failed, Please try again!",
+        status: "error",
+        colorScheme: "red",
+        duration: 2500,
+        isClosable: true,
+      });
     }
   };
 

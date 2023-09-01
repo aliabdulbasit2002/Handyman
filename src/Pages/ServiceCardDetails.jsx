@@ -32,13 +32,17 @@ const ServiceCardDetails = () => {
 
   useEffect(() => {
     const serviceDetailsData = async () => {
-      const { data } = await axios.get("http://localhost:3001/business/" + id);
+      const { data } = await axios.get(
+        "https://handyhelp.onrender.com/business/" + id
+      );
       setServiceDetails(data.data.singleBusiness);
     };
 
     // FEETCH COMMENTS FOR THIS BUSINESS
     const serviceComments = async () => {
-      const { data } = await axios.get("http://localhost:3001/comments/" + id);
+      const { data } = await axios.get(
+        "https://handyhelp.onrender.com/comments/" + id
+      );
       setComment(data);
       // console.log(data)
     };
