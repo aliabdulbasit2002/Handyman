@@ -36,7 +36,9 @@ const Home = () => {
   const [businesses, setBusinesses] = useState([]);
   useEffect(() => {
     const businessesData = async () => {
-      const { data } = await axios.get("http://localhost:3001/business");
+      const { data } = await axios.get(
+        "https://handyhelp.onrender.com/business"
+      );
       setBusinesses(data);
     };
     businessesData();

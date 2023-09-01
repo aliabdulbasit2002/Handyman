@@ -38,7 +38,10 @@ const Login = () => {
 
   const handleLogin = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3001/client/login", data);
+      const res = await axios.post(
+        "https://handyhelp.onrender.com/client/login",
+        data
+      );
 
       if (res.data.status == 404) {
         toast({

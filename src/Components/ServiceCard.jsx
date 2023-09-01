@@ -41,7 +41,7 @@ function ServiceCard({
         alignItems="center"
       >
         <Image
-          src={`http://localhost:3001/images/${img}`}
+          src={`https://handyhelp.onrender.com/images/${img}`}
           fallbackSrc="https://via.placeholder.com/150"
           w="100%"
           h="100%"

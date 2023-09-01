@@ -43,7 +43,7 @@ function BookCard() {
             overflow="hidden"
           >
             <Image
-              src={`http://localhost:3001/images/${image}`}
+              src={`https://handyhelp.onrender.com/images/${image}`}
               fallbackSrc="https://via.placeholder.com/150"
               alt="image here"
               w={"100%"}

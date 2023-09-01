@@ -25,7 +25,7 @@ function CategoryListCard({ item }) {
         <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
           <Box borderRadius="10" w={"150px"} h={"150px"} overflow={"hidden"}>
             <Image
-              src={`http://localhost:3001/images/${item.image}`}
+              src={`https://handyhelp.onrender.com/images/${item.image}`}
               w={{ base: "100%" }}
               fallbackSrc="https://via.placeholder.com/150"
               objectFit={"cover"}
@@ -40,7 +40,7 @@ function CategoryListCard({ item }) {
               overflow="hidden"
               whiteSpace="nowrap"
               textOverflow="ellipsis"
-              textTransform={'capitalize'}
+              textTransform={"capitalize"}
             >
               {item.businessName}
             </Text>
@@ -80,9 +80,16 @@ function CategoryListCard({ item }) {
                 <MdCategory />
                 <small>{item.category}</small>
               </Box>
-              <Box display={"inline-flex"} alignItems="center" textTransform={'capitalize'}>
+              <Box
+                display={"inline-flex"}
+                alignItems="center"
+                textTransform={"capitalize"}
+              >
                 <MdLocationOn />
-                <small>{item.freelancer.address.city} - {item.freelancer.address.town}</small>
+                <small>
+                  {item.freelancer.address.city} -{" "}
+                  {item.freelancer.address.town}
+                </small>
               </Box>
               <Box display={"inline-flex"} alignItems="center" gap={2}>
                 <MdPerson2 />

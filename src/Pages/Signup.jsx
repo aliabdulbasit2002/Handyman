@@ -40,7 +40,7 @@ const Signup = () => {
   const handleRegister = async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:3001/client/newClient",
+        "https://handyhelp.onrender.com/client/newClient",
         data
       );
       localStorage.setItem("user", JSON.stringify(res.data));

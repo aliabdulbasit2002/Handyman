@@ -52,7 +52,10 @@ function Booking() {
     console.log(request);
 
     try {
-      const res = await axios.post("http://localhost:3001/request", request);
+      const res = await axios.post(
+        "https://handyhelp.onrender.com/request",
+        request
+      );
       // navigate(-1);
     } catch (error) {
       console.log(error.message);

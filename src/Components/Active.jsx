@@ -170,7 +170,7 @@ function Active({ requestData }) {
             bg="red"
           >
             <Image
-              src={`http://localhost:3001/images/${requestData.business.image}`}
+              src={`https://handyhelp.onrender.com/images/${requestData.business.image}`}
               fallbackSrc="https://via.placeholder.com/150"
               // w={{ base: "50%" }}
               // h={{ base: "250px", md: "200px" }}

@@ -79,7 +79,7 @@ const ServiceCardDetails = () => {
           <Image
             // boxSize="md"
 
-            src={`http://localhost:3001/images/${image}`}
+            src={`https://handyhelp.onrender.com/images/${image}`}
             fallbackSrc="https://via.placeholder.com/700"
             // h={{ base: "400px", md: "550px" }}
             // w={{base:'300px',md:'550px'}}
