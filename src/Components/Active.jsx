@@ -181,7 +181,7 @@ function Active({ requestData }) {
           <Box>
             <Text
               fontSize={{ base: "xl", md: "3xl" }}
-              mb={{ base: 3, md: 10 }}
+              mb={{ base: 3, md: 2 }}
               fontWeight={"bold"}
               textTransform="capitalize"
             >
