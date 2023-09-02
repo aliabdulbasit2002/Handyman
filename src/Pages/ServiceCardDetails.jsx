@@ -65,42 +65,19 @@ const ServiceCardDetails = () => {
       {/* ServiceCardDetails details */}
       <Flex
         flexDir={{ base: "column", md: "row" }}
-        // justify={{ md: "space-evenly" }}
         p={5}
         gap={10}
         fontSize={{ base: "18px", md: "unset" }}
-        ps={{ base: 4, md: 0 }}
       >
-        <Box
-          w={{ base: "100%", md: "50%" }}
-          h={{ base: "300px", md: "550px" }}
-          overflow={"hidden"}
-          borderRadius="3xl"
-        >
+        <Box overflow="hidden" borderRadius="3xl">
           <Image
-            // boxSize="md"
-
             src={`${BaseUrl}/images/${image}`}
             fallbackSrc="https://via.placeholder.com/700"
-            // h={{ base: "400px", md: "550px" }}
-            // w={{base:'300px',md:'550px'}}
-            // mx={{ md: "auto" }}
-            objectFit="cover"
+            maxH="350px"
           />
         </Box>
-        <Flex
-          as={Box}
-          flexDir="column"
-          justify={{ md: "space-between" }}
-          //   gap={5}
-          w={{ md: "50%" }}
-          // mt={4}
-          // pb={5}
-        >
-          <Heading
-            fontSize={{ base: "3xl", md: "6xl" }}
-            textTransform={"capitalize"}
-          >
+        <Flex as={Box} flexDir="column" gap={2}>
+          <Heading fontSize="3xl" textTransform={"capitalize"}>
             {businessName}
           </Heading>
 

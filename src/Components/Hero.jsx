@@ -1,10 +1,9 @@
 import React from "react";
-import { Container, Box, SimpleGrid, Heading,Image } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
 
-
-function Hero({img}) {
+function Hero({ img }) {
   return (
-    <Box shadow={'sm'} borderRadius={10} overflow={'hidden'} >
+    <Box shadow="sm" borderRadius={10} overflow="hidden">
       <Image src={img} />
     </Box>
   );

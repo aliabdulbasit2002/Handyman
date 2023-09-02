@@ -94,7 +94,7 @@ function Active({ requestData }) {
           console.log("new comment");
         })
         .catch((err) => {
-          alert(err.message);
+          console.log(err.message);
         });
     };
 
