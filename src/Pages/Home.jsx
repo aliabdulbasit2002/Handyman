@@ -32,13 +32,17 @@ import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import axios from "axios";
 import BaseUrl from "../api/api";
+import Loading from "../Components/Loading";
 
 const Home = () => {
   const [businesses, setBusinesses] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const businessesData = async () => {
+      setLoading(true);
       const { data } = await axios.get(`${BaseUrl}/business`);
       setBusinesses(data);
+      setLoading(false);
     };
     businessesData();
   }, []);
@@ -77,7 +81,12 @@ const Home = () => {
 
       {/* SERVICES */}
       <Box w={"100%"} py={5} px={{ base: 2, md: 0 }}>
-        <Text fontWeight={"semibold"} fontSize={{ base: 15, md: "30" }}>
+        <Text
+          fontWeight={"semibold"}
+          fontSize={{ base: 15, md: "30" }}
+          ms={6}
+          mb={3}
+        >
           Browse Services
         </Text>
         <SimpleGrid
@@ -85,6 +94,7 @@ const Home = () => {
           gap={{ base: 2, md: 5 }}
           px={{ base: 2, md: 4 }}
         >
+          {loading && <Loading />}
           {businesses.map((business, index) => {
             const { _id, businessName, freelancer, isVerified, image } =
               business;
