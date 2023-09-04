@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import {
   Box,
   Container,
@@ -36,13 +36,11 @@ import Loading from "../Components/Loading";
 
 const Home = () => {
   const [businesses, setBusinesses] = useState([]);
-  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const businessesData = async () => {
-      setLoading(true);
       const { data } = await axios.get(`${BaseUrl}/business`);
       setBusinesses(data);
-      setLoading(false);
     };
     businessesData();
   }, []);
@@ -51,6 +49,7 @@ const Home = () => {
   return (
     <div>
       {/* HERO SECTION */}
+
       <Box overflow={"hidden"} p={{ base: 2, md: 10 }} rounded={"xl"}>
         <Swiper
           className="mySwiper"
@@ -94,24 +93,25 @@ const Home = () => {
           gap={{ base: 2, md: 5 }}
           px={{ base: 2, md: 4 }}
         >
-          {loading && <Loading />}
-          {businesses.map((business, index) => {
-            const { _id, businessName, freelancer, isVerified, image } =
-              business;
-            return (
-              <ServiceCard
-                id={_id}
-                key={index}
-                img={image}
-                businessName={businessName}
-                location={freelancer.address.city}
-                star="star"
-                isVerified={isVerified ? "verified" : "not verified"}
-                isVerifiedIcon={isVerified}
-                serviceProfile={"business/serviceProfile/" + _id}
-              />
-            );
-          })}
+          <Suspense fallback={<Loading />}>
+            {businesses.map((business, index) => {
+              const { _id, businessName, freelancer, isVerified, image } =
+                business;
+              return (
+                <ServiceCard
+                  id={_id}
+                  key={index}
+                  img={image}
+                  businessName={businessName}
+                  location={freelancer.address.city}
+                  star="star"
+                  isVerified={isVerified ? "verified" : "not verified"}
+                  isVerifiedIcon={isVerified}
+                  serviceProfile={"business/serviceProfile/" + _id}
+                />
+              );
+            })}
+          </Suspense>
         </SimpleGrid>
       </Box>
     </div>
