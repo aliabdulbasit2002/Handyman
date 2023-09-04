@@ -1,10 +1,12 @@
 import React from "react";
-import { Box, Image } from "@chakra-ui/react";
+import { AspectRatio, Box, Image } from "@chakra-ui/react";
 
 function Hero({ img }) {
   return (
     <Box shadow="sm" borderRadius={10} overflow="hidden">
-      <Image src={img} />
+      <AspectRatio ratio={14 / 5}>
+        <Image src={img} />
+      </AspectRatio>
     </Box>
   );
 }
