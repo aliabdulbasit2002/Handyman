@@ -33,25 +33,17 @@ function ServiceCard({
       rounded={10}
       style={{ textDecoration: "none" }}
     >
-      <Box
-        // w={{ base: "150px", md: "250px" }}
-        h={{ base: "150px", md: "250px" }}
-        overflow="hidden"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Box h={{ base: "200px", md: "250px" }} maxW="100%">
         <Image
           src={`${BaseUrl}/images/${img}`}
-          fallbackSrc="https://via.placeholder.com/150"
+          fallbackSrc="https://via.placeholder.com/600"
           w="100%"
           h="100%"
-          // h={{ base: "250px", md: "300px" }}
           objectFit="contain"
         />
       </Box>
 
-      <Box bg={"white"} p={{ base: 2 }} w={"100%"}>
+      <Box bg={"white"} p={2} w={"100%"}>
         <Flex alignItems={"center"} flexWrap={"wrap"}>
           <Text
             fontWeight={"semibold"}

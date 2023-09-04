@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Box,
   Button,
   Flex,
@@ -75,7 +76,7 @@ const ServiceCardDetails = () => {
             <Image
               src={`${BaseUrl}/images/${image}`}
               fallbackSrc="https://via.placeholder.com/700"
-              maxH="350px"
+              maxH={{ base: "450px", md: "450px" }}
             />
           </Box>
           <Flex as={Box} flexDir="column" gap={2}>
