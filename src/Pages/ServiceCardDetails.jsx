@@ -48,7 +48,7 @@ const ServiceCardDetails = () => {
     serviceComments();
 
     serviceDetailsData();
-  }, []);
+  }, [serviceDetails]);
 
   const {
     businessName,
@@ -77,6 +77,8 @@ const ServiceCardDetails = () => {
               src={`${BaseUrl}/images/${image}`}
               fallbackSrc="https://via.placeholder.com/700"
               maxH={{ base: "450px", md: "450px" }}
+              w={{ base: "450px", md: "600px" }}
+              objectFit={'contain'}
             />
           </Box>
           <Flex as={Box} flexDir="column" gap={2}>
