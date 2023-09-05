@@ -39,7 +39,7 @@ function ActiveBooking() {
       {requests.map((request, index) => {
         return <Active key={index} requestData={request} />;
       })}
-      {requests.length <= 0 && "No Data here"}
+      {requests.length <= 0 && <div>No Booking</div>}
     </Box>
   );
 }

@@ -25,13 +25,15 @@ function ActiveBooking() {
     requestData();
   }, [requests]);
 
+
+
   return (
     <Box p={{ base: 2, md: 5 }}>
       <Heading color="gray.400" display={"inline-flex"} alignItems="center">
         <span>
           <MdArrowBackIos onClick={() => navigate(-1)} />
         </span>
-        Active Booking
+        All Booking
       </Heading>
       {}
 
@@ -39,7 +41,7 @@ function ActiveBooking() {
       {requests.map((request, index) => {
         return <Active key={index} requestData={request} />;
       })}
-      {requests.length <= 0 && "No Data here"}
+      {requests.length <= 0 && <div>No Booking</div>}
     </Box>
   );
 }

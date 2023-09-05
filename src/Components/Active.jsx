@@ -156,7 +156,7 @@ function Active({ requestData }) {
   return (
     <Box bg="white" p="5" borderRadius={10} my="5" shadow="md">
       <Grid templateColumns="repeat(12,1fr)" gap={4}>
-        <GridItem colSpan={{ base: 12, md: 4 }}>
+        <GridItem colSpan={{ base: 6, md: 4 }}>
           <Box
             borderRadius="10"
             textAlign={{ base: "center" }}
@@ -187,7 +187,7 @@ function Active({ requestData }) {
             >
               {requestData.business.businessName}
             </Text>
-            <Text noOfLines={[1, 2, 3]} mb={{ base: 3, md: 5 }}>
+            <Text display={{base:'none'}} noOfLines={[1, 2, 3]} mb={{ base: 3, md: 5 }} >
               {requestData.business.bio}
             </Text>
             {/* STARS */}
@@ -248,7 +248,7 @@ function Active({ requestData }) {
           </Box>
         </GridItem>
         {/* BOOKING DETAILS */}
-        <GridItem colSpan={{ base: 6, md: 4 }}>
+        <GridItem colSpan={{ base: 12, md: 4 }}>
           <Box>
             <Text
               fontSize={{ base: "lg", md: "2xl" }}
