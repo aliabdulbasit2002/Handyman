@@ -154,25 +154,27 @@ function Active({ requestData }) {
   };
 
   return (
-    <Box bg="white" p="5" borderRadius={10} my="5" shadow="md">
-      <Grid templateColumns="repeat(12,1fr)" gap={4}>
+    <Box bg="white" p="4" borderRadius={10} my="5" shadow="md">
+      <Grid templateColumns="repeat(12,1fr)" gap={{base:1,md:4}} >
         <GridItem colSpan={{ base: 6, md: 4 }}>
           <Box
             borderRadius="10"
-            textAlign={{ base: "center" }}
-            w={{ base: "150px", md: "200px" }}
-            // h="100%"
+            // textAlign={{ base: "center" }}
+            w={{ base: "100%", md: "auto" }}
+            h="100%"
             overflow="hidden"
-            mx="auto"
+            // mx="auto"
             bg="red"
           >
             <Image
               src={`${BaseUrl}/images/${requestData.business.image}`}
               fallbackSrc="https://via.placeholder.com/150"
-              // w={{ base: "50%" }}
+              w={{ base: "100%",md:'auto' }}
+              h='100%'
               // h={{ base: "250px", md: "200px" }}
-              objectFit="cover"
-              mx={{ base: "auto" }}
+              // objectFit="cover"
+              // mx={{ base: "auto" }}
+              objectFit='cover'
             />
           </Box>
         </GridItem>
@@ -181,13 +183,15 @@ function Active({ requestData }) {
           <Box>
             <Text
               fontSize={{ base: "xl", md: "3xl" }}
-              mb={{ base: 3, md: 2 }}
+              mb={{ base: 0, md: 2 }}
               fontWeight={"bold"}
               textTransform="capitalize"
+              
+    
             >
               {requestData.business.businessName}
             </Text>
-            <Text display={{base:'none'}} noOfLines={[1, 2, 3]} mb={{ base: 3, md: 5 }} >
+            <Text display={{base:'none'}} noOfLines={[1, 2, 3]} mb={{ base: 0, md: 2 }} >
               {requestData.business.bio}
             </Text>
             {/* STARS */}
@@ -195,7 +199,7 @@ function Active({ requestData }) {
               p={"2px"}
               display={"flex"}
               color={"orange.400"}
-              mb={{ base: 3, md: 5 }}
+              mb={{ base: 1, md: 2 }}
             >
               <Box
                 display={"inline-flex"}
@@ -251,9 +255,9 @@ function Active({ requestData }) {
         <GridItem colSpan={{ base: 12, md: 4 }}>
           <Box>
             <Text
-              fontSize={{ base: "lg", md: "2xl" }}
+              fontSize={{ base: "lg", md: "3xl" }}
               fontWeight={"bold"}
-              mb={{ base: 0, md: 5 }}
+              mb={{ base: 0, md: 3 }}
             >
               Booking Details
             </Text>
@@ -282,12 +286,11 @@ function Active({ requestData }) {
               {requestData.description}
             </Box>
             {/* BUTTONS */}
-            <Box pt="5" textAlign={{ base: "15px", md: "20px" }}>
+            <Box pt="2" textAlign={{ base: "15px", md: "20px" }}>
               <Tag
                 size="sm"
                 bg={
-                  requestData.requestStatus === "accepted" ||
-                  requestData.requestStatus === "completed"
+                  requestData.requestStatus === "accepted" || requestData.requestStatus === "completed"
                     ? "green"
                     : "yellow"
                 }
@@ -303,14 +306,13 @@ function Active({ requestData }) {
               >
                 {requestData.requestStatus}
               </Tag>
-              {requestData.requestStatus === "completed" ||
-              requestData.requestStatus === "accepted" ? (
+              { //checking and showing button
+              requestData.requestStatus === "completed" ? (
                 <Button
                   onClick={onOpen}
                   size="sm"
                   colorScheme={
-                    requestData.requestStatus === "completed" ||
-                    requestData.requestStatus === "accepted"
+                    requestData.requestStatus === "completed"
                       ? "green"
                       : "yellow"
                   }

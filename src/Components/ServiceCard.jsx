@@ -36,7 +36,7 @@ function ServiceCard({
       <Box h={{ base: "200px", md: "250px" }} maxW="100%" overflow={'hidden'}>
         <Image
           src={`${BaseUrl}/images/${img}`}
-          // fallbackSrc="https://via.placeholder.com/600"
+          fallbackSrc="https://via.placeholder.com/600"
           w="100%"
           h="100%"
           objectFit="cover"
@@ -58,7 +58,7 @@ function ServiceCard({
           </Text>
           <Spacer />
 
-          <small>View Profile</small>
+          <small>View</small>
         </Flex>
 
         <Box p={"0px"} color={"gray.800"}>
@@ -84,9 +84,18 @@ function ServiceCard({
               <i>{isVerified}</i>
             </Text>
           </Flex>
-          <Box p={"2px"} display={"flex"} color={"orange.400"}>
-            {ratings}
-          </Box>
+          <Box
+                display={"inline-flex"}
+                alignItems="center"
+                bg={"orange"}
+                px={2}
+                color="white"
+                borderRadius="4"
+                mr="3"
+                gap={2}
+              >
+                <MdStar /> {ratings}
+              </Box>
         </Box>
       </Box>
     </ChakraLink>
