@@ -30,7 +30,7 @@ function BookCard() {
     <Link to={-1}>
       <Box
         bg="white"
-        p={{ base: 2, md: 5 }}
+        p={{ base: 1, md: 5 }}
         my={5}
         shadow="lg"
         borderRadius="10px"
