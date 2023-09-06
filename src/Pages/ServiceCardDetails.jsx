@@ -72,14 +72,19 @@ const ServiceCardDetails = () => {
           gap={10}
           fontSize={{ base: "18px", md: "unset" }}
         >
-          <Box overflow="hidden" borderRadius="3xl" bg='red'>
+          <Box
+            overflow="hidden"
+            borderRadius="3xl"
+            bg="red"
+            w={{ base: "350px", md: "400px" }}
+          >
             <Image
               src={`${BaseUrl}/images/${image}`}
               fallbackSrc="https://via.placeholder.com/700"
-              maxH={{ base: "450px", md: "450px" }}
-              w={{ base: "450px", md: "600px" }}
-              // w='100%'
-              objectFit={'cover'}
+              // maxH={{ base: "350px", md: "350px" }}
+              h="100%"
+              w="100%"
+              objectFit="cover"
             />
           </Box>
           <Flex as={Box} flexDir="column" gap={2}>

@@ -162,7 +162,7 @@ function Active({ requestData }) {
 
   return (
     <Box bg="white" p="4" borderRadius={10} my="5" shadow="md">
-      <Grid templateColumns="repeat(12,1fr)" gap={{base:1,md:4}} >
+      <Grid templateColumns="repeat(12,1fr)" gap={{ base: 1, md: 4 }}>
         <GridItem colSpan={{ base: 6, md: 4 }}>
           <Box
             borderRadius="10"
@@ -176,12 +176,12 @@ function Active({ requestData }) {
             <Image
               src={`${BaseUrl}/images/${requestData.business.image}`}
               fallbackSrc="https://via.placeholder.com/150"
-              w={{ base: "100%",md:'auto' }}
-              h='100%'
+              w={{ base: "100%", md: "auto" }}
+              h="100%"
               // h={{ base: "250px", md: "200px" }}
               // objectFit="cover"
               // mx={{ base: "auto" }}
-              objectFit='cover'
+              objectFit="cover"
             />
           </Box>
         </GridItem>
@@ -193,12 +193,14 @@ function Active({ requestData }) {
               mb={{ base: 0, md: 2 }}
               fontWeight={"bold"}
               textTransform="capitalize"
-              
-    
             >
               {requestData.business.businessName}
             </Text>
-            <Text display={{base:'none'}} noOfLines={[1, 2, 3]} mb={{ base: 0, md: 2 }} >
+            <Text
+              display={{ base: "none" }}
+              noOfLines={[1, 2, 3]}
+              mb={{ base: 0, md: 2 }}
+            >
               {requestData.business.bio}
             </Text>
             {/* STARS */}
@@ -297,7 +299,8 @@ function Active({ requestData }) {
               <Tag
                 size="sm"
                 bg={
-                  requestData.requestStatus === "accepted" || requestData.requestStatus === "completed"
+                  requestData.requestStatus === "accepted" ||
+                  requestData.requestStatus === "completed"
                     ? "green"
                     : "yellow"
                 }
@@ -331,6 +334,26 @@ function Active({ requestData }) {
               ) : (
                 ""
               )}
+              {
+                //checking and showing button
+                requestData.requestStatus === "completed" ? (
+                  <Button
+                    onClick={onOpen}
+                    size="sm"
+                    colorScheme={
+                      requestData.requestStatus === "completed"
+                        ? "green"
+                        : "yellow"
+                    }
+                    color={"white"}
+                    ml="2"
+                  >
+                    {"Send Pay"}
+                  </Button>
+                ) : (
+                  ""
+                )
+              }
               {requestData.requestStatus == "pending" ? (
                 <Button
                   colorScheme={
