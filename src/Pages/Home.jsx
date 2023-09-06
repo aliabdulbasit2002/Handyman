@@ -95,7 +95,7 @@ const Home = () => {
         >
           <Suspense fallback={<Loading />}>
             {businesses.map((business, index) => {
-              const { _id, businessName, freelancer, isVerified, image } =
+              const { _id, businessName, freelancer, isVerified, image,ratings } =
                 business;
               return (
                 <ServiceCard
@@ -108,6 +108,7 @@ const Home = () => {
                   isVerified={isVerified ? "verified" : "not verified"}
                   isVerifiedIcon={isVerified}
                   serviceProfile={"business/serviceProfile/" + _id}
+                  ratings={ratings}
                 />
               );
             })}

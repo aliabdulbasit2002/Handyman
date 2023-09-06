@@ -30,7 +30,7 @@ function BookCard() {
     <Link to={-1}>
       <Box
         bg="white"
-        p={{ base: 3, md: 5 }}
+        p={{ base: 1, md: 5 }}
         my={5}
         shadow="lg"
         borderRadius="10px"
@@ -38,8 +38,8 @@ function BookCard() {
       >
         <Flex gap={{ base: 2, md: 5 }}>
           <Box
-            bg="white"
-            w={{ base: "100px" }}
+            bg="red"
+            w={{base: '150px', md: "150px" }}
             borderRadius="5px"
             overflow="hidden"
           >
@@ -47,8 +47,9 @@ function BookCard() {
               src={`${BaseUrl}/images/${image}`}
               fallbackSrc="https://via.placeholder.com/150"
               alt="image here"
-              w={"100%"}
-              objectFit={"fill"}
+              w="100%"
+              h="100%"
+              objectFit={"cover"}
             />
           </Box>
           <Box flexGrow={2}>

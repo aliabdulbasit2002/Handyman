@@ -16,10 +16,10 @@ function ServiceCard({
   businessName,
   img,
   location,
-  star,
   isVerified,
   isVerifiedIcon,
   serviceProfile,
+  ratings
 }) {
   return (
     <ChakraLink
@@ -33,13 +33,13 @@ function ServiceCard({
       rounded={10}
       style={{ textDecoration: "none" }}
     >
-      <Box h={{ base: "200px", md: "250px" }} maxW="100%">
+      <Box h={{ base: "200px", md: "250px" }} maxW="100%" overflow={'hidden'}>
         <Image
           src={`${BaseUrl}/images/${img}`}
-          fallbackSrc="https://via.placeholder.com/600"
+          // fallbackSrc="https://via.placeholder.com/600"
           w="100%"
           h="100%"
-          objectFit="contain"
+          objectFit="cover"
         />
       </Box>
 
@@ -85,7 +85,7 @@ function ServiceCard({
             </Text>
           </Flex>
           <Box p={"2px"} display={"flex"} color={"orange.400"}>
-            {star}
+            {ratings}
           </Box>
         </Box>
       </Box>

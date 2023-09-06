@@ -12,8 +12,10 @@ import {
   MenuItem,
   MenuList,
   Text,
+  Image
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import logo from '../assets/Images/hh.png'
 
 const Navbar = () => {
   const activeUser = localStorage.getItem("user");
@@ -27,7 +29,8 @@ const Navbar = () => {
   return (
     <Flex h="56px" align="center" justify="space-between">
       <Link as={RouterLink} _hover={{ textDecor: "none" }} to="/">
-        <Heading size={{ base: "md", md: "lg" }}>HandyHelp</Heading>
+        {/* <Heading size={{ base: "md", md: "lg" }}>HandyHelp</Heading> */}
+        <Image src={logo} w={20}/>
       </Link>
       {currentUser ? (
         <HStack>

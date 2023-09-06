@@ -37,24 +37,6 @@ import { useNavigate } from "react-router-dom";
 import BaseUrl from "../api/api";
 
 function AllBookin() {
-//   const { isOpen, onOpen, onClose } = useDisclosure();
-  let fetchLocalStorage = localStorage.getItem("user");
-  let userId = JSON.parse(fetchLocalStorage);
-  const [allBooking,setAllBooking] =useState([])
-
-  useEffect(()=>{
-    const getAllBooking = async () => {
-        const data = await axios.get(
-          `${BaseUrl}/request/requestByIdDone/${userId._id}`
-        );
-        console.log(data.data)
-        setAllBooking(data.data);
-      };
-
-    getAllBooking()
-  },[])
-
-
 
   return (
     <Box bg="white" p="5" borderRadius={10} my="5" shadow="md">
@@ -187,16 +169,14 @@ function AllBookin() {
             {/* BUTTONS */}
             <Box pt="5" textAlign={{ base: "15px", md: "20px" }}>
               <Tag
-                size="sm"
+                size="lg"
                 bg={
-                  allBooking.requestStatus === "accepted" ||
-                  allBooking.requestStatus === "completed"
+                  allBooking.status === "done"
                     ? "green"
                     : "yellow"
                 }
                 color={
-                  allBooking.requestStatus === "accepted" ||
-                  allBooking.requestStatus === "completed"
+                  allBooking.status === "done"
                     ? "white"
                     : "black"
                 }
@@ -204,48 +184,14 @@ function AllBookin() {
                 py={3}
                 textTransform={"capitalize"}
               >
-                {allBooking.requestStatus}
+                {allBooking.status}
               </Tag>
-              {allBooking.requestStatus === "completed" ||
-              allBooking.requestStatus === "accepted" ? (
-                <Button
-                  onClick={onOpen}
-                  size="sm"
-                  colorScheme={
-                    allBooking.requestStatus === "completed" ||
-                    allBooking.requestStatus === "accepted"
-                      ? "green"
-                      : "yellow"
-                  }
-                  color={"white"}
-                  ml="2"
-                >
-                  {"Send Pay"}
-                </Button>
-              ) : (
-                ""
-              )}
-              {allBooking.requestStatus == "pending" ? (
-                <Button
-                  colorScheme={
-                    allBooking.requestStatus == "pending" ? "red" : "red"
-                  }
-                  color={"white"}
-                  ml="2"
-                  size="sm"
-                  onClick={cancelRequest}
-                >
-                  {"Cancel"}
-                </Button>
-              ) : (
-                ""
-              )}
+              
             </Box>
             {/* END OF BUTTONS */}
           </Box>
         </GridItem>
       </Grid>
-
     </Box>
   );
 }
