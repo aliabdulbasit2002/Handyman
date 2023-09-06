@@ -19,7 +19,7 @@ function ServiceCard({
   isVerified,
   isVerifiedIcon,
   serviceProfile,
-  ratings
+  ratings,
 }) {
   return (
     <ChakraLink
@@ -33,7 +33,7 @@ function ServiceCard({
       rounded={10}
       style={{ textDecoration: "none" }}
     >
-      <Box h={{ base: "200px", md: "250px" }} maxW="100%" overflow={'hidden'}>
+      <Box h={{ base: "200px", md: "250px" }} maxW="100%" overflow={"hidden"}>
         <Image
           src={`${BaseUrl}/images/${img}`}
           fallbackSrc="https://via.placeholder.com/600"
@@ -47,14 +47,14 @@ function ServiceCard({
         <Flex alignItems={"center"} flexWrap={"wrap"}>
           <Text
             fontWeight={"semibold"}
-            fontSize={{ base: 14, md: 19 }}
+            fontSize={{ base: 14, md: 16 }}
             color="blue.400"
             textTransform={"capitalize"}
           >
-            {businessName.length > 30
+            {businessName.length > 20
               ? businessName.slice(0, 20)
               : businessName}
-            {businessName.length > 30 && "..."}
+            {businessName.length > 20 && "..."}
           </Text>
           <Spacer />
 
@@ -85,17 +85,17 @@ function ServiceCard({
             </Text>
           </Flex>
           <Box
-                display={"inline-flex"}
-                alignItems="center"
-                bg={"orange"}
-                px={2}
-                color="white"
-                borderRadius="4"
-                mr="3"
-                gap={2}
-              >
-                <MdStar /> {ratings}
-              </Box>
+            display={"inline-flex"}
+            alignItems="center"
+            bg={"orange"}
+            px={2}
+            color="white"
+            borderRadius="4"
+            mr="3"
+            gap={2}
+          >
+            <MdStar /> {ratings}
+          </Box>
         </Box>
       </Box>
     </ChakraLink>
