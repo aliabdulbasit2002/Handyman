@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading,Text } from "@chakra-ui/react";
 import Active from "../Components/Active";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
@@ -39,7 +39,7 @@ function ActiveBooking() {
       {requests.map((request, index) => {
         return <Active key={index} requestData={request} />;
       })}
-      {requests.length <= 0 && <div>No Booking</div>}
+      {requests.length <= 0 && <Box h={'50vh'} display={'flex'} justifyContent='center' alignItems='center'><Heading>No Active Booking</Heading></Box>}
     </Box>
   );
 }

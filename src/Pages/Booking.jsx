@@ -60,7 +60,7 @@ function Booking() {
     // console.log(bookingInfo);
     navigate("/ActiveBooking");
     // onOpen();
-    console.log(request);
+    // console.log(request);
   };
   // 
   const dateToday = () => {

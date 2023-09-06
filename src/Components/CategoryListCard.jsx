@@ -7,6 +7,7 @@ import {
   Text,
   Spacer,
   Image,
+  Flex
 } from "@chakra-ui/react";
 import {
   MdStar,
@@ -22,14 +23,20 @@ import BaseUrl from "../api/api";
 function CategoryListCard({ item }) {
   return (
     <Link to={`/business/serviceProfile/${item._id}`}>
-      <Box bg="white" p="5" borderRadius={10} my="5" shadow="md">
-        <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
-          <Box borderRadius="10" w={"150px"} h={"150px"} overflow={"hidden"}>
+      <Box bg="white" p="2" borderRadius={10} my="5" shadow="md" >
+        <Flex columns={{ base: 2, md: 3 }} gap={4}>
+          <Box w={{ base: "40%", md: "150px" }}
+            maxH={"100%"}
+            borderRadius="5px"
+            overflow="hidden"
+            bg={'red'}
+            >
             <Image
               src={`${BaseUrl}/images/${item.image}`}
-              w={{ base: "100%" }}
               fallbackSrc="https://via.placeholder.com/150"
-              objectFit={"cover"}
+              w="100%"
+              h="100%"
+              objectFit={{ base: "cover"}}
             />
           </Box>
 
@@ -73,9 +80,10 @@ function CategoryListCard({ item }) {
             <Box
               mt={"7px"}
               display={"flex"}
-              gap={{ base: 2, md: 5 }}
+              gap={{ base: 1 }}
               alignItems="center"
               flexWrap={"wrap"}
+              w='100%'
             >
               <Box display={"inline-flex"} alignItems="center" gap={2}>
                 <MdCategory />
@@ -98,7 +106,7 @@ function CategoryListCard({ item }) {
               </Box>
             </Box>
           </Box>
-        </SimpleGrid>
+        </Flex>
       </Box>
     </Link>
   );
