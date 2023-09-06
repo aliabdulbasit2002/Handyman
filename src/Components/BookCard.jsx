@@ -108,14 +108,14 @@ function BookCard() {
           </Box>
           <Box
             position={"absolute"}
-            p={{ base: 1, md: 3 }}
+            p={{ base: 1, md: 2 }}
             textAlign="center"
             right={0}
             top={0}
             bg={"green.500"}
             color="white"
           >
-            <Text>GH {charge}</Text>
+            <Text fontWeight='semibold'>GH {charge}</Text>
           </Box>
         </Flex>
       </Box>

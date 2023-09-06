@@ -47,6 +47,7 @@ function Booking() {
       client: currentUser._id,
       refNumber: nanoid(),
       ...data,
+      ...bookingInfo
     };
 
     try {
@@ -59,7 +60,7 @@ function Booking() {
     // console.log(bookingInfo);
     navigate("/ActiveBooking");
     // onOpen();
-    console.log(data);
+    console.log(request);
   };
 
   const dateToday = () => {
@@ -80,34 +81,20 @@ function Booking() {
   } = useForm();
 
   const getUserLiveLocation = () => {
-    navigator.permissions
-      .query({ name: "geolocation" })
-      .then((permissionStatus) => {
-        if (permissionStatus.state === "granted") {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              setBookingInfo({
-                ...bookingInfo,
-                cordinates: {
-                  lat: position.coords.latitude,
-                  long: position.coords.longitude,
-                },
-              });
-            },
-            (error) => {
-              console.log("Error", error);
-            }
-          );
-        } else if (permissionStatus.state === "prompt") {
-          console.log("Location permission is pending. Prompting user...");
-          alert("Your location is off, Kindly turn on device location");
-          // You can show a UI element or message to guide the user to grant permission.
-        } else {
-          console.log("Location permission denied or unavailable.");
-          alert("Permission denied, Kindly turn on device location");
-        }
-      });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
   };
+  function showPosition(position) {
+    setBookingInfo({
+      ...bookingInfo,
+      lat : position.coords.latitude,
+      long : position.coords.longitude
+    })
+  }
+  
 
   return (
     <Box p={{ base: 2, md: 5 }}>
