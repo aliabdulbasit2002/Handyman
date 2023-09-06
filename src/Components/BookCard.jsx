@@ -38,8 +38,9 @@ function BookCard() {
       >
         <Flex gap={{ base: 2, md: 5 }}>
           <Box
-            bg="red"
-            w={{base: '150px', md: "150px" }}
+            // bg="red"
+            w={{ base: "40%", md: "150px" }}
+            maxH={"100%"}
             borderRadius="5px"
             overflow="hidden"
           >
@@ -49,7 +50,7 @@ function BookCard() {
               alt="image here"
               w="100%"
               h="100%"
-              objectFit={"cover"}
+              objectFit={{ base: "contain", md: "cover" }}
             />
           </Box>
           <Box flexGrow={2}>
