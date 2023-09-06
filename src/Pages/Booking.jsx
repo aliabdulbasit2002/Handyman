@@ -17,7 +17,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import plumber2 from "../assets/Images/plumber2.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { customAlphabet } from "nanoid";
 import BookCard from "../Components/BookCard";
@@ -49,8 +48,6 @@ function Booking() {
       refNumber: nanoid(),
       ...data,
     };
-
-    console.log(request);
 
     try {
       const res = await axios.post(`${BaseUrl}/request`, request);
