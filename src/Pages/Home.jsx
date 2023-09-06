@@ -95,8 +95,14 @@ const Home = () => {
         >
           <Suspense fallback={<Loading />}>
             {businesses.map((business, index) => {
-              const { _id, businessName, freelancer, isVerified, image,ratings } =
-                business;
+              const {
+                _id,
+                businessName,
+                freelancer,
+                isVerified,
+                image,
+                ratings,
+              } = business;
               return (
                 <ServiceCard
                   id={_id}
