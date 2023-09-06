@@ -63,7 +63,7 @@ function Booking() {
     // onOpen();
     console.log(request);
   };
-
+  // 
   const dateToday = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -80,7 +80,7 @@ function Booking() {
     formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm();
-
+  // function to get location
   const getUserLiveLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);

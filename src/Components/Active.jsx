@@ -60,11 +60,12 @@ function Active({ requestData }) {
       await axios
         .post(`${BaseUrl}/transaction`, data)
         .then((response) => {
-          console.log("new transaction", response.data);
+          
           comment();
-          updateBusinessBalance();
-          updateClientBalance();
-          updateReq();
+          // updateClientBalance();
+          // updateBusinessBalance();
+          // updateReq();
+          console.log('paid')
           toast({
             description: "Payment successful",
             status: "success",
@@ -73,7 +74,9 @@ function Active({ requestData }) {
             isClosable: true,
             position: "bottom",
           });
-          navigate("/");
+          
+          // navigate("/");
+          
         })
         .catch((err) => {
           // console.log(err.message)
@@ -82,47 +85,50 @@ function Active({ requestData }) {
 
     newTrasaction();
 
-    // UPDATE FREELANCER BALANCE
+    // UPDATE BUSINESS BALANCE
     const updateBusinessBalance = async () => {
-      const databody = { amount: payment.amount };
-      await axios
-        .patch(
-          `${BaseUrl}/business/addBalance/${requestData.business._id}`,
-          databody
-        )
-        .then((_response) => {
-          console.log("new comment");
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+      const databody = {amount:payment.amount};
+      let result = await axios.patch(`${BaseUrl}/business/addBalance/${requestData.business._id}`,databody)
+      console.log(result)
+      
+      // await axios
+      //   .patch(
+      //     `${BaseUrl}/business/addBalance/${requestData.business._id}`,databody)
+      //   .then((response) => {
+      //     console.log(response);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err.message);
+      //   });
     };
+    updateBusinessBalance()
 
     // DEDUCT FROM USER BALANCE
-    const updateClientBalance = async () => {
-      const databody = { amount: payment.amount };
-      await axios
-        .patch(`${BaseUrl}/client/deductBalance/${userId._id}`, databody)
-        .then((_response) => {
-          console.log("new comment");
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
-    };
+    // const updateClientBalance = async () => {
+    //   const databody = { amount: payment.amount };
+    //   await axios
+    //     .patch(`${BaseUrl}/client/deductBalance/${userId._id}`, databody)
+    //     .then((_response) => {
+    //       console.log("client balance deducted");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.message);
+    //     });
+    // };
 
-    // DEDUCT FROM USER BALANCE
-    const updateReq = async () => {
-      const databody = { status: "done" };
-      await axios
-        .patch(`${BaseUrl}/request/editRequest/${reqId}`, databody)
-        .then((_response) => {
-          console.log("new comment");
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
-    };
+    // UPDATE REQUEST STATUS (DONE)
+    // const updateReq = async () => {
+    //   const databody = { status: "done" };
+    //   await axios
+    //     .patch(`${BaseUrl}/request/editRequest/${reqId}`, databody)
+    //     .then((_response) => {
+    //       console.log("request completed");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.message);
+    //     });
+    // };
+    // updateReq()
 
     // INSERT NEW COMMENT
     const comment = async () => {
@@ -140,7 +146,8 @@ function Active({ requestData }) {
           alert(err.message);
         });
     };
-  };
+
+  }; //submit ends here
 
   const cancelRequest = async () => {
     await axios
@@ -307,10 +314,10 @@ function Active({ requestData }) {
                 {requestData.requestStatus}
               </Tag>
               { //checking and showing button
-              requestData.requestStatus === "completed" ? (
+              requestData.requestStatus === "completed" && requestData.status != 'done' ? (
                 <Button
                   onClick={onOpen}
-                  size="sm"
+                  size="md"
                   colorScheme={
                     requestData.requestStatus === "completed"
                       ? "green"
