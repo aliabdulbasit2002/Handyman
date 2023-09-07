@@ -1,9 +1,10 @@
-import { Center, Spinner } from "@chakra-ui/react";
+import { Center, Spinner,Text } from "@chakra-ui/react";
 
 const Loading = () => {
   return (
-    <Center minH="300px" justifyContent="center">
-      <Spinner size="md" />
+    <Center minH="50vh" justifyContent="center">
+      <Spinner size="lg" />
+      <Text ms='4'>Loading</Text>
     </Center>
   );
 };

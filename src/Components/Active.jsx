@@ -168,8 +168,6 @@ function Active({ requestData }) {
             w={{ base: "100%", md: "auto" }}
             h="100%"
             overflow="hidden"
-            // mx="auto"
-            bg="red"
           >
             <Image
               src={`${BaseUrl}/images/${requestData.business.image}`}

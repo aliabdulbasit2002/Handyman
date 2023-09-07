@@ -33,6 +33,7 @@ function Booking() {
   const activeUser = localStorage.getItem("user");
   const currentUser = JSON.parse(activeUser);
   const nanoid = customAlphabet("1234567890ABCEDF", 6);
+ 
 
   // console.log(receivedData.serviceDetails._id);
   let id = receivedData.serviceDetails._id;

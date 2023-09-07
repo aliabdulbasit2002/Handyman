@@ -30,19 +30,26 @@ import Loading from "../Components/Loading";
 const ServiceCardDetails = () => {
   const [serviceDetails, setServiceDetails] = useState([]);
   const [comment, setComment] = useState([]);
+  const [loader,setLoder] = useState(true)
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const serviceDetailsData = async () => {
       const { data } = await axios.get(`${BaseUrl}/business/` + id);
-      setServiceDetails(data.data.singleBusiness);
+      if(data){
+        setLoder(false)
+        setServiceDetails(data.data.singleBusiness);
+      }
     };
 
     // FEETCH COMMENTS FOR THIS BUSINESS
     const serviceComments = async () => {
       const { data } = await axios.get(`${BaseUrl}/comments/` + id);
-      setComment(data);
+      if(data){
+        setLoder(false)
+        setComment(data);
+      }
       // console.log(data)
     };
     serviceComments();
@@ -65,6 +72,7 @@ const ServiceCardDetails = () => {
   return (
     <Box my={{base:5,md:10}}>
       {/* ServiceCardDetails details */}
+      {loader? <Loading /> :
       <Suspense fallback={<Loading />}>
         <Flex
           flexDir={{ base: "column", md: "row" }}
@@ -81,7 +89,6 @@ const ServiceCardDetails = () => {
             <Image
               src={`${BaseUrl}/images/${image}`}
               fallbackSrc="https://via.placeholder.com/400"
-              // maxH={{ base: "350px", md: "350px" }}
               h="100%"
               w="100%"
               objectFit="cover"
@@ -176,14 +183,14 @@ const ServiceCardDetails = () => {
           mt={{ md: 10 }}
         >
           <TabList>
-            <Tab _selected={{ color: "white", bg: "twitter.400" }}>
+            <Tab _selected={{ color: "black", bg: "twitter.100" }}>
               Customer Reviews
             </Tab>
-            <Tab _selected={{ color: "white", bg: "twitter.400" }}>Profile</Tab>
+            <Tab _selected={{ color: "black", bg: "twitter.100" }}>Profile</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Reviews customers={comment} />
+              {comment.length <=0 ? 'No Comments': <Reviews customers={comment} />}
             </TabPanel>
             <TabPanel>
               <Text>{bio}</Text>
@@ -191,6 +198,7 @@ const ServiceCardDetails = () => {
           </TabPanels>
         </Tabs>
       </Suspense>
+    }
     </Box>
   );
 };

@@ -36,11 +36,16 @@ import Loading from "../Components/Loading";
 
 const Home = () => {
   const [businesses, setBusinesses] = useState([]);
+  const [loader,setLoder] = useState(true)
 
   useEffect(() => {
     const businessesData = async () => {
       const { data } = await axios.get(`${BaseUrl}/business`);
-      setBusinesses(data);
+      if(data){
+        setLoder(false)
+        setBusinesses(data);
+      }
+      
     };
     businessesData();
   }, []);
@@ -83,11 +88,12 @@ const Home = () => {
         <Text
           fontWeight={"semibold"}
           fontSize={{ base: 15, md: "30" }}
-          ms={6}
+          ms={2}
           mb={3}
         >
           Browse Services
         </Text>
+        {loader? <Loading /> : ''}
         <SimpleGrid
           columns={{ base: 2, md: 3, lg: 4 }}
           gap={{ base: 2, md: 5 }}
