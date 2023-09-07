@@ -51,14 +51,11 @@ function ServiceCard({
             color="blue.400"
             textTransform={"capitalize"}
           >
-            {businessName.length > 20
+            {businessName.length > 30
               ? businessName.slice(0, 20)
               : businessName}
-            {businessName.length > 20 && "..."}
+            {businessName.length > 30 && "..."}
           </Text>
-          <Spacer />
-
-          <small>View</small>
         </Flex>
 
         <Box p={"0px"} color={"gray.800"}>

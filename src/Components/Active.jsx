@@ -23,6 +23,7 @@ import {
   useToast,
   Grid,
   GridItem,
+  Badge,
 } from "@chakra-ui/react";
 import {
   MdStar,
@@ -60,13 +61,12 @@ function Active({ requestData }) {
       await axios
         .post(`${BaseUrl}/transaction`, data)
         .then((response) => {
-          
           comment();
-          updateBusinessBalance()
+          updateBusinessBalance();
           updateClientBalance();
           updateBusinessBalance();
           updateReq();
-          console.log('paid')
+          console.log("paid");
           toast({
             description: "Payment successful",
             status: "success",
@@ -84,12 +84,14 @@ function Active({ requestData }) {
 
     newTrasaction();
 
-     // UPDATE BUSINESS BALANCE
+    // UPDATE BUSINESS BALANCE
     const updateBusinessBalance = async () => {
-      const databody = {amount:payment.amount};      
+      const databody = { amount: payment.amount };
       await axios
         .patch(
-          `${BaseUrl}/business/addBalance/${requestData.business._id}`,databody)
+          `${BaseUrl}/business/addBalance/${requestData.business._id}`,
+          databody
+        )
         .then((response) => {
           console.log(response);
         })
@@ -97,8 +99,6 @@ function Active({ requestData }) {
           console.log(err.message);
         });
     };
-
-    
 
     // DEDUCT FROM USER BALANCE
     const updateClientBalance = async () => {
@@ -156,33 +156,27 @@ function Active({ requestData }) {
       });
   };
 
- 
-
   return (
-    <Box bg="white" p="4" borderRadius={10} my="5" shadow="md">
+    <Box bg="white" borderRadius={10} my="5" shadow="md">
       <Grid templateColumns="repeat(12,1fr)" gap={{ base: 1, md: 4 }}>
-        <GridItem colSpan={{ base: 6, md: 4 }}>
+        <GridItem colSpan={{ base: 12, md: 4 }}>
           <Box
             borderRadius="10"
-            // textAlign={{ base: "center" }}
             w={{ base: "100%", md: "auto" }}
-            h="100%"
+            h={{ base: "200px", md: "100%" }}
             overflow="hidden"
           >
             <Image
               src={`${BaseUrl}/images/${requestData.business.image}`}
               fallbackSrc="https://via.placeholder.com/150"
               w={{ base: "100%", md: "auto" }}
-              h="100%"
-              // h={{ base: "250px", md: "200px" }}
-              // objectFit="cover"
-              // mx={{ base: "auto" }}
+              // h="100%"
               objectFit="cover"
             />
           </Box>
         </GridItem>
         {/* BUSINESS INFO */}
-        <GridItem colSpan={{ base: 6, md: 4 }}>
+        <GridItem colSpan={{ base: 6, md: 4 }} p={2}>
           <Box>
             <Text
               fontSize={{ base: "xl", md: "3xl" }}
@@ -257,7 +251,7 @@ function Active({ requestData }) {
           </Box>
         </GridItem>
         {/* BOOKING DETAILS */}
-        <GridItem colSpan={{ base: 12, md: 4 }}>
+        <GridItem colSpan={{ base: 6, md: 4 }} p={2}>
           <Box>
             <Text
               fontSize={{ base: "lg", md: "3xl" }}
@@ -292,44 +286,50 @@ function Active({ requestData }) {
             </Box>
             {/* BUTTONS */}
             <Box pt="2" textAlign={{ base: "15px", md: "20px" }}>
-              <Tag
-                size="sm"
-                bg={
+              {/* <Badge variant="outline" colorScheme="green">
+                Default
+              </Badge> */}
+              <Badge
+                borderRadius={3}
+                py={2}
+                variant={
+                  requestData.requestStatus === "accepted" ||
+                  requestData.requestStatus === "completed"
+                    ? "subtle"
+                    : "solid"
+                }
+                colorScheme={
                   requestData.requestStatus === "accepted" ||
                   requestData.requestStatus === "completed"
                     ? "green"
                     : "yellow"
                 }
-                color={
-                  requestData.requestStatus === "accepted" ||
-                  requestData.requestStatus === "completed"
-                    ? "white"
-                    : "black"
-                }
                 fontWeight="semibold"
-                py={3}
                 textTransform={"capitalize"}
               >
                 {requestData.requestStatus}
-              </Tag>
-              { //checking and showing button
-              requestData.requestStatus === "completed" && requestData.status != 'done' ? (
-                <Button
-                  onClick={onOpen}
-                  size="md"
-                  colorScheme={
-                    requestData.requestStatus === "completed"
-                      ? "green"
-                      : "yellow"
-                  }
-                  color={"white"}
-                  ml="2"
-                >
-                  {"Send Pay"}
-                </Button>
-              ) : (
-                ""
-              )}
+              </Badge>
+              {
+                //checking and showing button
+                requestData.requestStatus === "completed" &&
+                requestData.status != "done" ? (
+                  <Button
+                    onClick={onOpen}
+                    size="md"
+                    colorScheme={
+                      requestData.requestStatus === "completed"
+                        ? "green"
+                        : "yellow"
+                    }
+                    color={"white"}
+                    ml="2"
+                  >
+                    {"Send Pay"}
+                  </Button>
+                ) : (
+                  ""
+                )
+              }
               {requestData.requestStatus == "pending" ? (
                 <Button
                   colorScheme={

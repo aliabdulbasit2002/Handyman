@@ -42,8 +42,7 @@ const Signup = () => {
     try {
       const res = await axios.post(`${BaseUrl}/client/newClient`, data);
       localStorage.setItem("user", JSON.stringify(res.data));
-      navigate("/");
-      console.log(res.data);
+      navigate(-2);
     } catch (error) {
       toast({
         description: "Account not created",
@@ -98,14 +97,7 @@ const Signup = () => {
             </FormControl>
             <FormControl>
               <FormLabel>Occupation</FormLabel>
-              <Input
-                type="text"
-                variant="filled"
-                {...register("occupation", {
-                  required: "Occupation is required",
-                })}
-              />
-              <Text color="red">{errors.occupation?.message}</Text>
+              <Input type="text" variant="filled" {...register("occupation")} />
             </FormControl>
           </Stack>
           <Stack mt={3} direction={{ base: "column", md: "row" }}>
