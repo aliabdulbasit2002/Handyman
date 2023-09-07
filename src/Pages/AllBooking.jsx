@@ -5,11 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import axios from "axios";
 import BaseUrl from "../api/api";
+import Loading from "../Components/Loading";
 
 function ActiveBooking() {
   // GET USER ID FROM LOCALSTORAGE
   let userId = localStorage.getItem("user");
   let userData = JSON.parse(userId);
+  const [loader,setLoder] = useState(true)
 
   const navigate = useNavigate();
   const [requests, setRequests] = useState([]);
@@ -20,7 +22,10 @@ function ActiveBooking() {
       const data = await axios.get(
         `${BaseUrl}/request/requestByIdDone/${userData._id}`
       );
-      setRequests(data.data);
+      if(data.data){
+        setLoder(false)
+        setRequests(data.data);
+      }
     };
     requestData();
   }, [requests]);
@@ -38,10 +43,11 @@ function ActiveBooking() {
       {}
 
       {/* LIST OF ACTIVE BOOKINGS */}
+      {loader? <Loading /> : ''}
       {requests.map((request, index) => {
-        return <Active key={index} requestData={request} />;
+        return loader ? <Loading /> : <Active key={index} requestData={request} /> ;
       })}
-      {requests.length <= 0 && <div>No Booking</div>}
+      {loader == false && requests.length <= 0 && <Box h={'50vh'} display={'flex'} justifyContent='center' alignItems='center'><Heading>No Booking</Heading></Box>}
     </Box>
   );
 }

@@ -60,11 +60,13 @@ function Active({ requestData }) {
       await axios
         .post(`${BaseUrl}/transaction`, data)
         .then((response) => {
-          console.log("new transaction", response.data);
+          
           comment();
-          updateBusinessBalance();
+          updateBusinessBalance()
           updateClientBalance();
+          updateBusinessBalance();
           updateReq();
+          console.log('paid')
           toast({
             description: "Payment successful",
             status: "success",
@@ -82,25 +84,21 @@ function Active({ requestData }) {
 
     newTrasaction();
 
-    // UPDATE FREELANCER BALANCE
+     // UPDATE BUSINESS BALANCE
     const updateBusinessBalance = async () => {
-      const databody = { amount: payment.amount };
+      const databody = {amount:payment.amount};      
       await axios
         .patch(
-          `${BaseUrl}/business/addBalance/${requestData.business._id}`,
-          databody
-        )
-        .then((_response) => {
-          console.log("new comment");
+          `${BaseUrl}/business/addBalance/${requestData.business._id}`,databody)
+        .then((response) => {
+          console.log(response);
         })
         .catch((err) => {
-          toast({
-            description: err.message,
-            status: "error",
-            colorScheme: "red",
-          });
+          console.log(err.message);
         });
     };
+
+    
 
     // DEDUCT FROM USER BALANCE
     const updateClientBalance = async () => {
@@ -108,29 +106,26 @@ function Active({ requestData }) {
       await axios
         .patch(`${BaseUrl}/client/deductBalance/${userId._id}`, databody)
         .then((_response) => {
-          console.log("new comment");
+          console.log("client balance deducted");
         })
         .catch((err) => {
-          toast({
-            description: err.message,
-            status: "error",
-            colorScheme: "red",
-          });
+          console.log(err.message);
         });
     };
 
-    // DEDUCT FROM USER BALANCE
+    // UPDATE REQUEST STATUS (DONE)
     const updateReq = async () => {
       const databody = { status: "done" };
       await axios
         .patch(`${BaseUrl}/request/editRequest/${reqId}`, databody)
         .then((_response) => {
-          console.log("new comment");
+          console.log("request completed");
         })
         .catch((err) => {
-          alert(err.message);
+          console.log(err.message);
         });
     };
+    // updateReq()
 
     // INSERT NEW COMMENT
     const comment = async () => {
@@ -145,10 +140,10 @@ function Active({ requestData }) {
           console.log("new comment");
         })
         .catch((err) => {
-          alert(err.message);
+          console.log(err.message);
         });
     };
-  };
+  }; //submit ends here
 
   const cancelRequest = async () => {
     await axios
@@ -161,6 +156,8 @@ function Active({ requestData }) {
       });
   };
 
+ 
+
   return (
     <Box bg="white" p="4" borderRadius={10} my="5" shadow="md">
       <Grid templateColumns="repeat(12,1fr)" gap={{ base: 1, md: 4 }}>
@@ -171,8 +168,6 @@ function Active({ requestData }) {
             w={{ base: "100%", md: "auto" }}
             h="100%"
             overflow="hidden"
-            // mx="auto"
-            bg="red"
           >
             <Image
               src={`${BaseUrl}/images/${requestData.business.image}`}
@@ -317,26 +312,24 @@ function Active({ requestData }) {
               >
                 {requestData.requestStatus}
               </Tag>
-              {
-                //checking and showing button
-                requestData.requestStatus === "completed" ? (
-                  <Button
-                    onClick={onOpen}
-                    size="sm"
-                    colorScheme={
-                      requestData.requestStatus === "completed"
-                        ? "green"
-                        : "yellow"
-                    }
-                    color={"white"}
-                    ml="2"
-                  >
-                    {"Send Pay"}
-                  </Button>
-                ) : (
-                  ""
-                )
-              }
+              { //checking and showing button
+              requestData.requestStatus === "completed" && requestData.status != 'done' ? (
+                <Button
+                  onClick={onOpen}
+                  size="md"
+                  colorScheme={
+                    requestData.requestStatus === "completed"
+                      ? "green"
+                      : "yellow"
+                  }
+                  color={"white"}
+                  ml="2"
+                >
+                  {"Send Pay"}
+                </Button>
+              ) : (
+                ""
+              )}
               {requestData.requestStatus == "pending" ? (
                 <Button
                   colorScheme={

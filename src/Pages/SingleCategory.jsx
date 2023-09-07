@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
@@ -32,15 +32,16 @@ function SingleCategory() {
         </Link>
         {singlecategory}
       </Heading>
-      <Box p={{ base: 2 }}>
+
+      <SimpleGrid columns={{base:1,md:2}} gap={{base:0,md:5}} p={{ base: 2 }}>
         {serviceDetails && serviceDetails.length >= 1 ? (
           serviceDetails.map((item, index) => (
             <CategoryListCard item={item} key={index} />
           ))
         ) : (
-          <Text>No Category</Text>
+          <Text>No Services</Text>
         )}
-      </Box>
+      </SimpleGrid>
     </Box>
   );
 }
