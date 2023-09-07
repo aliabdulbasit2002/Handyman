@@ -16,7 +16,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { AiTwotoneStar } from "react-icons/ai";
-import { MdOutlineCleaningServices, MdVerified, MdStar } from "react-icons/md";
+import { MdOutlineCleaningServices, MdVerified, MdStar,MdCategory ,MdVerifiedUser} from "react-icons/md";
 import { ImLocation } from "react-icons/im";
 import { BsPerson } from "react-icons/bs";
 import cleanerImg from "../assets/Images/cleaner.png";
@@ -63,43 +63,44 @@ const ServiceCardDetails = () => {
   } = serviceDetails;
 
   return (
-    <Box my={10}>
+    <Box my={{base:5,md:10}}>
       {/* ServiceCardDetails details */}
       <Suspense fallback={<Loading />}>
         <Flex
           flexDir={{ base: "column", md: "row" }}
-          p={5}
-          gap={10}
+          p={{base:3,md:5}}
+          gap={{base:1,md:5}}
           fontSize={{ base: "18px", md: "unset" }}
         >
           <Box
             overflow="hidden"
-            borderRadius="3xl"
+            borderRadius="xl"
             bg="red"
-            w={{ base: "350px", md: "400px" }}
+            w={{ base: "auto", md: "400px" }}
           >
             <Image
               src={`${BaseUrl}/images/${image}`}
-              fallbackSrc="https://via.placeholder.com/700"
+              fallbackSrc="https://via.placeholder.com/400"
               // maxH={{ base: "350px", md: "350px" }}
               h="100%"
               w="100%"
               objectFit="cover"
             />
           </Box>
-          <Flex as={Box} flexDir="column" gap={2}>
-            <Heading fontSize="3xl" textTransform={"capitalize"}>
+          <Flex as={Box} flexDir="column">
+            <Heading fontSize={{base:'3xl',md:"4xl"}} textTransform={"capitalize"}>
               {businessName}
             </Heading>
 
             <Text
               color="gray.500"
-              fontWeight="semibold"
-              fontSize={{ base: "3xl" }}
+              fontWeight="normal"
+              fontSize={{ base: "xl" }}
               textTransform="capitalize"
             >
               {freelancer?.firstname} {freelancer?.lastname}
             </Text>
+
             <Box>
               <Box
                 display={"inline-flex"}
@@ -108,25 +109,27 @@ const ServiceCardDetails = () => {
                 px={2}
                 color="white"
                 borderRadius="4"
-                mr="3"
+                my="3"
               >
                 <MdStar /> {ratings}
               </Box>
-              <Box textAlign="start" mt={{ base: 0, md: 4 }}>
+
+
+              <Box display={{base:'flex',md:'block'}} gap={{base:5,md:'none'}} textAlign="start" mb={{ base: 3, md: 4 }}>
                 <Flex
                   as={Text}
                   align="center"
                   fontSize={{ md: "24px" }}
-                  gap={2}
+                  gap={{base:0,md:2}}
                 >
-                  <MdOutlineCleaningServices /> {category}
+                  <MdCategory /> {category}
                 </Flex>
                 <Flex
                   as={Text}
                   align="center"
                   textTransform="capitalize"
-                  fontSize={{ md: "24px" }}
-                  gap={2}
+                  fontSize={{base:'18px', md: "24px" }}
+                  gap={{base:0,md:2}}
                 >
                   <ImLocation />
                   {freelancer?.address?.city}
@@ -136,16 +139,16 @@ const ServiceCardDetails = () => {
                   align="center"
                   textTransform="capitalize"
                   fontSize={{ md: "24px" }}
-                  gap={2}
+                  gap={{base:0,md:2}}
                 >
-                  {isVerified ? <MdVerified color="green" /> : <Icon />}
+                  {isVerified ? <MdVerifiedUser color="green" /> : <Icon />}
                   {isVerified ? "verified" : "Not Verified"}
                 </Flex>
                 <Flex
                   as={Text}
                   align="center"
                   fontSize={{ md: "24px" }}
-                  gap={2}
+                  gap={{base:0,md:2}}
                 >
                   <BsPerson />
                   {workers}
@@ -169,7 +172,7 @@ const ServiceCardDetails = () => {
         <Tabs
           variant="enclosed-colored"
           colorScheme="twitter"
-          px={4}
+          px={3}
           mt={{ md: 10 }}
         >
           <TabList>
