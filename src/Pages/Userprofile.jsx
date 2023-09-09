@@ -19,17 +19,20 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import lady from "../assets/Images/cleaner.png";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import BaseUrl from "../api/api";
 
 const Userprofile = () => {
   const activeUser = localStorage.getItem("user");
   const currentUser = JSON.parse(activeUser);
-  const { fullname, email, balance, address } = currentUser;
+  const { fullname, email, balance, address, _id } = currentUser;
 
   return (
     <Box p={4}>
       <Box height="200px" bg="gray.400" pos="relative">
         <Avatar
-          src={lady}
           boxSize="100px"
           objectFit="cover"
           pos="absolute"
@@ -50,15 +53,54 @@ const Userprofile = () => {
   );
 };
 
-const Deposit = ({ balance }) => {
+const Deposit = () => {
+  const activeUser = localStorage.getItem("user");
+  const currentUser = JSON.parse(activeUser);
+  const { _id } = currentUser;
+
+  const [userBal, setUserBal] = useState(0);
+
+  // hook form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+    reset,
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.patch(
+        `${BaseUrl}/client/addBalance/${_id}`,
+        data
+      );
+      // console.log(res.data);
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+    const fetctBal = async () => {
+      const { data } = await axios.get(`${BaseUrl}/client/singleClient/${_id}`);
+      setUserBal(data.balance);
+    };
+
+    fetctBal();
+  }, [isSubmitSuccessful, reset, userBal]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box p={7} shadow="md" flex={1} maxW="500px" textAlign="center">
       <Text fontWeight="bold" color="gray.700">
         Balance
       </Text>
       <Text fontSize="3xl" fontWeight="extrabold" color="gray.400">
-        GH {balance}
+        GH {userBal}
       </Text>
       <Button onClick={onOpen} colorScheme="twitter" w="full" mt={3}>
         Deposit
@@ -76,13 +118,28 @@ const Deposit = ({ balance }) => {
             Deposit Funds
           </ModalHeader>
           <ModalCloseButton />
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <ModalBody as={VStack}>
-              <Input variant="filled" placeholder="phone number" />
-              <Input variant="filled" placeholder="amount" />
+              <Input
+                variant="filled"
+                placeholder="phone number"
+                {...register("phone", { required: "Phone no. is required" })}
+              />
+              <Text color="red">{errors.phone?.message}</Text>
+              <Input
+                variant="filled"
+                placeholder="amount"
+                {...register("amount", { required: "Please enter an amount" })}
+              />
+              <Text color="red">{errors.amount?.message}</Text>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="twitter" w="full" onClick={onClose}>
+              <Button
+                colorScheme="twitter"
+                w="full"
+                type="submit"
+                isLoading={isSubmitting}
+              >
                 Pay Now
               </Button>
             </ModalFooter>

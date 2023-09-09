@@ -33,7 +33,6 @@ function Booking() {
   const activeUser = localStorage.getItem("user");
   const currentUser = JSON.parse(activeUser);
   const nanoid = customAlphabet("1234567890ABCEDF", 6);
- 
 
   // console.log(receivedData.serviceDetails._id);
   let id = receivedData.serviceDetails._id;
@@ -48,8 +47,10 @@ function Booking() {
       client: currentUser._id,
       refNumber: nanoid(),
       ...data,
-      ...bookingInfo
+      ...bookingInfo,
     };
+
+    console.log(request);
 
     try {
       const res = await axios.post(`${BaseUrl}/request`, request);
@@ -63,7 +64,7 @@ function Booking() {
     // onOpen();
     // console.log(request);
   };
-  // 
+  //
   const dateToday = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -84,18 +85,17 @@ function Booking() {
   const getUserLiveLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
+    } else {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
   };
   function showPosition(position) {
     setBookingInfo({
       ...bookingInfo,
-      lat : position.coords.latitude,
-      long : position.coords.longitude
-    })
+      lat: position.coords.latitude,
+      long: position.coords.longitude,
+    });
   }
-  
 
   return (
     <Box p={{ base: 2, md: 5 }}>
@@ -113,7 +113,7 @@ function Booking() {
             <FormControl>
               <FormLabel>Date</FormLabel>
               <Input
-                type="date"
+                type="datetime-local"
                 min={dateToday()}
                 id="requestDate"
                 {...register("requestDate", { required: "Date is required" })}
