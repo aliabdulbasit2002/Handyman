@@ -36,7 +36,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BaseUrl from "../api/api";
 
-function Active({ requestData }) {
+function AllBookingCard({ requestData }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   let fetchLocalStorage = localStorage.getItem("user");
   const nanoid = customAlphabet("1234567890ABCEDF", 6);
@@ -170,7 +170,7 @@ function Active({ requestData }) {
               src={`${BaseUrl}/images/${requestData.business.image}`}
               fallbackSrc="https://via.placeholder.com/150"
               w={{ base: "100%", md: "auto" }}
-              // h="100%"
+              h="100%"
               objectFit="cover"
             />
           </Box>
@@ -179,7 +179,7 @@ function Active({ requestData }) {
         <GridItem colSpan={{ base: 6, md: 4 }} p={2}>
           <Box>
             <Text
-              fontSize={{ base: "xl", md: "3xl" }}
+              fontSize={{ base: "md", md: "2xl" }}
               mb={{ base: 0, md: 2 }}
               fontWeight={"bold"}
               textTransform="capitalize"
@@ -189,6 +189,7 @@ function Active({ requestData }) {
             <Text
               display={{ base: "none" }}
               noOfLines={[1, 2, 3]}
+              fontSize={{ base: "0.75rem", md: "1rem" }}
               mb={{ base: 0, md: 2 }}
             >
               {requestData.business.bio}
@@ -254,38 +255,38 @@ function Active({ requestData }) {
         <GridItem colSpan={{ base: 6, md: 4 }} p={2}>
           <Box>
             <Text
-              fontSize={{ base: "lg", md: "3xl" }}
+              fontSize={{ base: "md", md: "2xl" }}
               fontWeight={"bold"}
               mb={{ base: 0, md: 3 }}
             >
               Booking Details
             </Text>
-            <Box fontSize={{ base: "15px", md: "20px" }}>
+            <Box fontSize={{ base: "0.75rem", md: "1rem" }}>
               <Text as={"span"} fontWeight="bold" color={"gray"}>
                 Service :
               </Text>{" "}
               {requestData.business.category}
             </Box>
-            <Box fontSize={{ base: "15px", md: "20px" }}>
+            <Box fontSize={{ base: "0.75rem", md: "1rem" }}>
               <Text as={"span"} fontWeight="bold" color={"gray"}>
                 Date & Time :
               </Text>{" "}
               {new Date(requestData.requestDate).toDateString()}
             </Box>
-            <Box fontSize={{ base: "15px", md: "20px" }}>
+            <Box fontSize={{ base: "0.75rem", md: "1rem" }}>
               <Text as={"span"} fontWeight="bold" color={"gray"}>
-                Location
+                Location :
               </Text>{" "}
               {requestData.address}
             </Box>
-            <Box fontSize={{ base: "15px", md: "20px" }}>
+            <Box fontSize={{ base: "0.75rem", md: "1rem" }}>
               <Text as={"span"} fontWeight="bold" color={"gray"}>
                 Description :
               </Text>{" "}
               {requestData.description}
             </Box>
             {/* BUTTONS */}
-            <Box pt="2" textAlign={{ base: "15px", md: "20px" }}>
+            <Box pt="2" textAlign={{ base: "0.75rem", md: "1rem" }}>
               {/* <Badge variant="outline" colorScheme="green">
                 Default
               </Badge> */}
@@ -350,41 +351,8 @@ function Active({ requestData }) {
           </Box>
         </GridItem>
       </Grid>
-
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent mx={3}>
-          <ModalHeader textAlign="center">
-            Send To : {requestData.business.businessName}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <form mt={5} onSubmit={handleSubmit}>
-              <FormLabel>Amount to Pay</FormLabel>
-              <Input
-                placeholder="e.g 200"
-                type="number"
-                mb={4}
-                onChange={(e) =>
-                  setPayment({ ...payment, amount: e.target.value })
-                }
-              />
-              <Textarea
-                placeholder="Review"
-                mb={4}
-                onChange={(e) =>
-                  setPayment({ ...payment, review: e.target.value })
-                }
-              />
-              <Button type="submit" w={"100%"} colorScheme="blue">
-                Pay
-              </Button>
-            </form>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 }
 
-export default Active;
+export default AllBookingCard;
