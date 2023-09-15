@@ -43,12 +43,13 @@ const Home = () => {
       const { data } = await axios.get(`${BaseUrl}/business`);
       if(data){
         setLoder(false)
-        setBusinesses(data);
+        let reverseData = data.reverse()
+        setBusinesses(reverseData);
       }
       
     };
     businessesData();
-  }, []);
+  }, [businesses]);
 
   // console.log(businesses);
   return (
