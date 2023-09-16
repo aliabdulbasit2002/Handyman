@@ -1,0 +1,17 @@
+{
+    "name": "HandyHelp",
+    "short_name": "HH",
+    "description": "We provide service to your doorstep",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+      {
+        "src": "../src/assets/Images/hh144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      }
+    ]
+  }
+  

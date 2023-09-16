@@ -9,8 +9,16 @@ import electrician from "../assets/Images/electrician.png";
 import hairsalon from "../assets/Images/hairsalon.png";
 import painter from "../assets/Images/painter.png";
 import carpenter from "../assets/Images/carpenter.png";
+import security from "../assets/Images/guard.png";
+import pest_control from "../assets/Images/pest-control.png";
+import homecare from "../assets/Images/assisted-living.png";
+import mechanic from "../assets/Images/mechanic.png";
+import acrepair from "../assets/Images/acreapir.png";
+import driver from "../assets/Images/driver.png";
+
+
+
 import { Link,useParams,useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function AllCatrgories() {
 
@@ -24,7 +32,7 @@ function AllCatrgories() {
       </Heading>
 
       <SimpleGrid
-        templateColumns={{ base: "repeat(3, 1fr)", md: "repeat(5, 1fr)" }}
+        templateColumns={{ base: "repeat(4, 1fr)", md: "repeat(5, 1fr)" }}
         gap={6}
         bg="gray.50"
         my={{ base: 10, md: 15 }}
@@ -32,16 +40,17 @@ function AllCatrgories() {
       >
         <CategItem img={plumber} title={"Plumber"} />
         <CategItem img={cleaner} title={"Cleaner"} />
-        <CategItem img={electrician} title={"Mechanic"} />
+        <CategItem img={mechanic} title={"Mechanic"} />
         <CategItem img={hairsalon} title={"Salon"} />
         <CategItem img={painter} title={"Painter"} />
-        <CategItem img={carpenter} title={"Waste Manag..."} />
-        <CategItem img={plumber} title={"Driver"} />
-        <CategItem img={cleaner} title={"Home Care"} />
+        <CategItem img={cleaner} title={"Waste Manag..."} />
+        <CategItem img={driver} title={"Driver"} />
+        <CategItem img={homecare} title={"Home Care"} />
         <CategItem img={electrician} title={"Electrician"} />
-        <CategItem img={hairsalon} title={"Gardener"} />
-        <CategItem img={painter} title={"Security"} />
-        <CategItem img={carpenter} title={"AC Repair"} />
+        <CategItem img={pest_control} title={"Pest Control"} />
+        <CategItem img={security} title={"Security"} />
+        <CategItem img={acrepair} title={"AC Repair"} />
+        <CategItem img={carpenter} title={"Carpenter"} />
       </SimpleGrid>
     </Box>
   );
