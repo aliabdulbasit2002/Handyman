@@ -45,9 +45,11 @@ function ActiveBookingCard({ requestData }) {
   const [payment, setPayment] = useState();
   const toast = useToast();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // INSERT NEW TRASACTION
     let data = {
       client: userId._id,
@@ -79,10 +81,21 @@ function ActiveBookingCard({ requestData }) {
         })
         .catch((err) => {
           // console.log(err.message)
+          toast({
+            description: err.message,
+            status: "error",
+            duration: 5000,
+            colorScheme: "red",
+            isClosable: true,
+            position: "top",
+          });
         });
     };
 
-    newTrasaction();
+    setTimeout(() => {
+      newTrasaction();
+      setIsLoading(false);
+    }, 5000);
 
     // UPDATE BUSINESS BALANCE
     const updateBusinessBalance = async () => {
@@ -376,7 +389,12 @@ function ActiveBookingCard({ requestData }) {
                   setPayment({ ...payment, review: e.target.value })
                 }
               />
-              <Button type="submit" w={"100%"} colorScheme="blue">
+              <Button
+                type="submit"
+                w={"100%"}
+                colorScheme="blue"
+                isLoading={isLoading}
+              >
                 Pay
               </Button>
             </form>
