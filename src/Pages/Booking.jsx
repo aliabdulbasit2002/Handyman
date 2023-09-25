@@ -15,6 +15,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -33,7 +34,7 @@ function Booking() {
   const activeUser = localStorage.getItem("user");
   const currentUser = JSON.parse(activeUser);
   const nanoid = customAlphabet("1234567890ABCEDF", 6);
-
+  const toast = useToast();
   // console.log(receivedData.serviceDetails._id);
   let id = receivedData.serviceDetails._id;
   let business = receivedData.serviceDetails;
@@ -50,7 +51,7 @@ function Booking() {
       ...bookingInfo,
     };
 
-    console.log(request);
+    // console.log(request);
 
     try {
       const res = await axios.post(`${BaseUrl}/request`, request);
@@ -85,6 +86,14 @@ function Booking() {
   const getUserLiveLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
+      toast({
+        description: "Location activated",
+        status: "success",
+        colorScheme: "green",
+        duration: 4000,
+        position: "top",
+        isClosable: true,
+      });
     } else {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
