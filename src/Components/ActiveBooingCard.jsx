@@ -172,11 +172,11 @@ function ActiveBookingCard({ requestData }) {
   return (
     <Box bg="white" borderRadius={10} my="5" shadow="md">
       <Grid templateColumns="repeat(12,1fr)" gap={{ base: 1, md: 4 }}>
-        <GridItem colSpan={{ base: 12, md: 4 }}>
+        <GridItem colSpan={{ base: 4, md: 4 }} p={2}>
           <Box
             borderRadius="10"
             w={{ base: "100%", md: "auto" }}
-            h={{ base: "200px", md: "100%" }}
+            h={{ base: "100px", md: "100%" }}
             overflow="hidden"
           >
             <Image
@@ -189,7 +189,7 @@ function ActiveBookingCard({ requestData }) {
           </Box>
         </GridItem>
         {/* BUSINESS INFO */}
-        <GridItem colSpan={{ base: 6, md: 4 }} p={2}>
+        <GridItem colSpan={{ base: 6, md: 4 }} p={2} display={{base:'none',md:"block"}}>
           <Box>
             <Text
               fontSize={{ base: "md", md: "2xl" }}
@@ -206,7 +206,7 @@ function ActiveBookingCard({ requestData }) {
             >
               {requestData.business.bio}
             </Text>
-            {/* STARS */}
+            
             <Box
               p={"2px"}
               display={"flex"}
@@ -275,9 +275,9 @@ function ActiveBookingCard({ requestData }) {
             </Text>
             <Box fontSize={{ base: "0.75rem", md: "1rem" }}>
               <Text as={"span"} fontWeight="bold" color={"gray"}>
-                Service :
+                Freelancer :
               </Text>{" "}
-              {requestData.business.category}
+              {requestData.business.businessName}
             </Box>
             <Box fontSize={{ base: "0.75rem", md: "1rem" }}>
               <Text as={"span"} fontWeight="bold" color={"gray"}>
