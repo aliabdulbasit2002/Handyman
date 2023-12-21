@@ -49,10 +49,11 @@ const Login = () => {
           duration: 2500,
           isClosable: true,
         });
+        return;
       } else {
         localStorage.setItem("user", JSON.stringify(res.data.loginUser));
+        navigate(-1);
       }
-      navigate(-1);
     } catch (error) {
       toast({
         description: "Failed, Please try again!",
